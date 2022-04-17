@@ -12,8 +12,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    url: jdbc:tc:postgresql:14.2:///LostArk?TC_TMPFS=/testtmpfs:rw
-    username: LostArk
+    url: jdbc:tc:postgresql:14.2:///lostarkcalc?TC_TMPFS=/testtmpfs:rw
+    username: lostarkcalc
     password:
     hikari:
       poolName: Hikari

@@ -18,11 +18,11 @@ spring:
     # Uncomment the following line to enable tests against production database type rather than H2, using Testcontainers
     #active: testcontainers
   application:
-    name: LostArk
+    name: lostarkcalc
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:mem:lostark;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:lostarkcalc;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     name:
     username:
     password:
@@ -61,13 +61,13 @@ spring:
     basename: i18n/messages
   task:
     execution:
-      thread-name-prefix: lost-ark-task-
+      thread-name-prefix: lostarkcalc-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: lost-ark-scheduling-
+      thread-name-prefix: lostarkcalc-scheduling-
       pool:
         size: 20
   thymeleaf:
@@ -84,7 +84,7 @@ server:
 # ===================================================================
 jhipster:
   clientApp:
-    name: 'lostArkApp'
+    name: 'lostarkcalcApp'
   logging:
     # To test json console appender
     use-json-format: false
@@ -100,7 +100,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: YzJkOTIxZjMxZThjNGE4MzZjZTAxNmMxODAxMThkZTQwYzAwNDBjZGM4NTA4OTkzMWU2NGI1MjVhZjI2NDk0NWVjYWM0MTFjYzM1OWViNDJjYTE0ZjkxYzYzYzk5OWFiYTBmNTZhM2VmYTQwM2UwZDYzOThkZDMzNTczNjQ0ZDY=
+        base64-secret: NWJmZjMzNDI4YTAwOWI3ZGUzOTUxYzFhYzc5YzY4Y2Y1NWU3ZTNjNmZhYTg2YmE2ZDM3ZWZiYmUyODkxMmVkMGIwNWEwNGJlNDJhYjIwYjgzODU5ZTA5NjE4OGM3MTgxZGYxNTZkM2RlZGIyYWFhYTZiNzVkNmJhOTk3YTk4OGQ=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
 # ===================================================================

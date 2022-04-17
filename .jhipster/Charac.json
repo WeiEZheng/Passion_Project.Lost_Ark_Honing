@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20220417211022",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "charac",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "job",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "server",
+      "fieldType": "Server",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Azena,Avesta,Ladon,Una,Galatur,Kharmine,Regulus,Karta,Elzowin,Sasha,Adrinne,Aldebaran,Zosma,Vykas,Danube"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Charac",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "equipment",
+      "otherEntityRelationshipName": "charac",
+      "relationshipName": "characterEq",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,54 @@
+
+entity MarketPrice {
+	itemName String required
+    itemPricePerStack Integer required
+    numberPerStack Integer required
+    timeUpdated ZonedDateTime required
+}
+
+entity HoningMat{
+	tier Integer required
+    level Integer required
+    shardType ShardType required
+    equipType EquipType required
+    fusionMaterialName1 String required
+    fusionMaterialNum1 Integer required
+    fusionMaterialName2 String 
+    fusionMaterialNum2 Integer
+    fusionMaterialName3 String 
+    fusionMaterialNum3 Integer
+}
+
+enum ShardType{
+	Destruction, Guardian
+}
+
+enum EquipType{
+	Armor, Weapon
+}
+
+entity Charac{
+	name String required
+    job String required
+    server Server required
+}
+
+entity Equipment{
+	tier Integer required
+    honingLevel Integer required
+    equipType EquipType required
+}
+
+enum Server {
+	Azena, Avesta, Ladon, Una, Galatur, Kharmine, Regulus, Karta, Elzowin, Sasha, Adrinne, Aldebaran, Zosma, Vykas, Danube
+}
+
+relationship OneToMany {
+	Charac{CharacterEq} to Equipment {Charac}
+}
+
+relationship ManyToMany{
+	HoningMat {MarketPrice} to MarketPrice {HoningMat}
+}
+
+service all with serviceImpl

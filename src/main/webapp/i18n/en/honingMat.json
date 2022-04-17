@@ -1,0 +1,34 @@
+{
+  "lostarkcalcApp": {
+    "honingMat": {
+      "home": {
+        "title": "Honing Mats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Honing Mat",
+        "createOrEditLabel": "Create or edit a Honing Mat",
+        "notFound": "No Honing Mats found"
+      },
+      "created": "A new Honing Mat is created with identifier {{ param }}",
+      "updated": "A Honing Mat is updated with identifier {{ param }}",
+      "deleted": "A Honing Mat is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Honing Mat {{ id }}?"
+      },
+      "detail": {
+        "title": "Honing Mat"
+      },
+      "id": "ID",
+      "tier": "Tier",
+      "level": "Level",
+      "shardType": "Shard Type",
+      "equipType": "Equip Type",
+      "fusionMaterialName1": "Fusion Material Name 1",
+      "fusionMaterialNum1": "Fusion Material Num 1",
+      "fusionMaterialName2": "Fusion Material Name 2",
+      "fusionMaterialNum2": "Fusion Material Num 2",
+      "fusionMaterialName3": "Fusion Material Name 3",
+      "fusionMaterialNum3": "Fusion Material Num 3",
+      "marketPrice": "Market Price"
+    }
+  }
+}
