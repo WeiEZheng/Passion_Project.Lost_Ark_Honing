@@ -7,43 +7,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { getEntity } from './charac.reducer';
+import { getEntity } from './characters.reducer';
 
-export const CharacDetail = (props: RouteComponentProps<{ id: string }>) => {
+export const CharactersDetail = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getEntity(props.match.params.id));
   }, []);
 
-  const characEntity = useAppSelector(state => state.charac.entity);
+  const charactersEntity = useAppSelector(state => state.characters.entity);
   return (
     <Row>
       <Col md="8">
-        <h2 data-cy="characDetailsHeading">Charac</h2>
+        <h2 data-cy="charactersDetailsHeading">Characters</h2>
         <dl className="jh-entity-details">
           <dt>
             <span id="id">ID</span>
           </dt>
-          <dd>{characEntity.id}</dd>
+          <dd>{charactersEntity.id}</dd>
           <dt>
             <span id="name">Name</span>
           </dt>
-          <dd>{characEntity.name}</dd>
+          <dd>{charactersEntity.name}</dd>
           <dt>
             <span id="advClass">Adv Class</span>
           </dt>
-          <dd>{characEntity.advClass}</dd>
+          <dd>{charactersEntity.advClass}</dd>
           <dt>
             <span id="server">Server</span>
           </dt>
-          <dd>{characEntity.server}</dd>
+          <dd>{charactersEntity.server}</dd>
         </dl>
-        <Button tag={Link} to="/charac" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to="/characters" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/charac/${characEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/characters/${charactersEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
         </Button>
       </Col>
@@ -51,4 +51,4 @@ export const CharacDetail = (props: RouteComponentProps<{ id: string }>) => {
   );
 };
 
-export default CharacDetail;
+export default CharactersDetail;

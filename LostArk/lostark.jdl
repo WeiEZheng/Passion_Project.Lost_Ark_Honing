@@ -6,14 +6,13 @@ entity MarketPrice {
     TimeUpdated Instant required
 }
 
-entity Charac{
+entity Characters{
 	Name String required
     AdvClass String required
     Server Server required
 }
 
 entity Equipment{
-	CharacterID Integer required
 	Tier Integer required
     HoningLevel Integer required
     EquipmentType EquipType required
@@ -28,7 +27,7 @@ enum Server {
 }
 
 relationship OneToMany {
-	Charac{Equipment} to Equipment {Charac}
+	Characters{Equipment} to Equipment{Characters}
 }
 
 service all with serviceImpl

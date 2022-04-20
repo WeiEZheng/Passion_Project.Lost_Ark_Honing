@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20220420000812",
+  "changelogDate": "20220420003908",
   "dto": "no",
   "embedded": false,
   "entityTableName": "market_price",

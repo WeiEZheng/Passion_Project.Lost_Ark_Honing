@@ -1,15 +1,10 @@
 {
   "applications": "*",
-  "changelogDate": "20220420000814",
+  "changelogDate": "20220420003910",
   "dto": "no",
   "embedded": false,
   "entityTableName": "equipment",
   "fields": [
-    {
-      "fieldName": "characterID",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
     {
       "fieldName": "tier",
       "fieldType": "Integer",
@@ -34,9 +29,9 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "charac",
+      "otherEntityName": "characters",
       "otherEntityRelationshipName": "equipment",
-      "relationshipName": "charac",
+      "relationshipName": "characters",
       "relationshipType": "many-to-one"
     }
   ],

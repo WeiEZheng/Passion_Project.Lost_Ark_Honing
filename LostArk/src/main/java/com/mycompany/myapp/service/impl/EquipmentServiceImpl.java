@@ -44,9 +44,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         return equipmentRepository
             .findById(equipment.getId())
             .map(existingEquipment -> {
-                if (equipment.getCharacterID() != null) {
-                    existingEquipment.setCharacterID(equipment.getCharacterID());
-                }
                 if (equipment.getTier() != null) {
                     existingEquipment.setTier(equipment.getTier());
                 }

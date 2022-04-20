@@ -27,10 +27,6 @@ export const EquipmentDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{equipmentEntity.id}</dd>
           <dt>
-            <span id="characterID">Character ID</span>
-          </dt>
-          <dd>{equipmentEntity.characterID}</dd>
-          <dt>
             <span id="tier">Tier</span>
           </dt>
           <dd>{equipmentEntity.tier}</dd>
@@ -42,8 +38,8 @@ export const EquipmentDetail = (props: RouteComponentProps<{ id: string }>) => {
             <span id="equipmentType">Equipment Type</span>
           </dt>
           <dd>{equipmentEntity.equipmentType}</dd>
-          <dt>Charac</dt>
-          <dd>{equipmentEntity.charac ? equipmentEntity.charac.id : ''}</dd>
+          <dt>Characters</dt>
+          <dd>{equipmentEntity.characters ? equipmentEntity.characters.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/equipment" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

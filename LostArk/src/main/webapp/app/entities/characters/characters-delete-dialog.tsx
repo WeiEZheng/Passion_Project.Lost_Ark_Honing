@@ -5,9 +5,9 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './charac.reducer';
+import { getEntity, deleteEntity } from './characters.reducer';
 
-export const CharacDeleteDialog = (props: RouteComponentProps<{ id: string }>) => {
+export const CharactersDeleteDialog = (props: RouteComponentProps<{ id: string }>) => {
   const [loadModal, setLoadModal] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -16,11 +16,11 @@ export const CharacDeleteDialog = (props: RouteComponentProps<{ id: string }>) =
     setLoadModal(true);
   }, []);
 
-  const characEntity = useAppSelector(state => state.charac.entity);
-  const updateSuccess = useAppSelector(state => state.charac.updateSuccess);
+  const charactersEntity = useAppSelector(state => state.characters.entity);
+  const updateSuccess = useAppSelector(state => state.characters.updateSuccess);
 
   const handleClose = () => {
-    props.history.push('/charac');
+    props.history.push('/characters');
   };
 
   useEffect(() => {
@@ -31,21 +31,21 @@ export const CharacDeleteDialog = (props: RouteComponentProps<{ id: string }>) =
   }, [updateSuccess]);
 
   const confirmDelete = () => {
-    dispatch(deleteEntity(characEntity.id));
+    dispatch(deleteEntity(charactersEntity.id));
   };
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose} data-cy="characDeleteDialogHeading">
+      <ModalHeader toggle={handleClose} data-cy="charactersDeleteDialogHeading">
         Confirm delete operation
       </ModalHeader>
-      <ModalBody id="lostarkApp.charac.delete.question">Are you sure you want to delete this Charac?</ModalBody>
+      <ModalBody id="lostarkApp.characters.delete.question">Are you sure you want to delete this Characters?</ModalBody>
       <ModalFooter>
         <Button color="secondary" onClick={handleClose}>
           <FontAwesomeIcon icon="ban" />
           &nbsp; Cancel
         </Button>
-        <Button id="jhi-confirm-delete-charac" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
+        <Button id="jhi-confirm-delete-characters" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
           &nbsp; Delete
         </Button>
@@ -54,4 +54,4 @@ export const CharacDeleteDialog = (props: RouteComponentProps<{ id: string }>) =
   );
 };
 
-export default CharacDeleteDialog;
+export default CharactersDeleteDialog;

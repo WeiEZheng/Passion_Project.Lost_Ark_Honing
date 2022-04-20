@@ -8,8 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ICharac } from 'app/shared/model/charac.model';
-import { getEntities as getCharacs } from 'app/entities/charac/charac.reducer';
+import { ICharacters } from 'app/shared/model/characters.model';
+import { getEntities as getCharacters } from 'app/entities/characters/characters.reducer';
 import { IEquipment } from 'app/shared/model/equipment.model';
 import { EquipType } from 'app/shared/model/enumerations/equip-type.model';
 import { getEntity, updateEntity, createEntity, reset } from './equipment.reducer';
@@ -19,7 +19,7 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const characs = useAppSelector(state => state.charac.entities);
+  const characters = useAppSelector(state => state.characters.entities);
   const equipmentEntity = useAppSelector(state => state.equipment.entity);
   const loading = useAppSelector(state => state.equipment.loading);
   const updating = useAppSelector(state => state.equipment.updating);
@@ -36,7 +36,7 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
       dispatch(getEntity(props.match.params.id));
     }
 
-    dispatch(getCharacs({}));
+    dispatch(getCharacters({}));
   }, []);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
     const entity = {
       ...equipmentEntity,
       ...values,
-      charac: characs.find(it => it.id.toString() === values.charac.toString()),
+      characters: characters.find(it => it.id.toString() === values.characters.toString()),
     };
 
     if (isNew) {
@@ -65,7 +65,7 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
       : {
           equipmentType: 'Armor',
           ...equipmentEntity,
-          charac: equipmentEntity?.charac?.id,
+          characters: equipmentEntity?.characters?.id,
         };
 
   return (
@@ -84,17 +84,6 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="equipment-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField
-                label="Character ID"
-                id="equipment-characterID"
-                name="characterID"
-                data-cy="characterID"
-                type="text"
-                validate={{
-                  required: { value: true, message: 'This field is required.' },
-                  validate: v => isNumber(v) || 'This field should be a number.',
-                }}
-              />
               <ValidatedField
                 label="Tier"
                 id="equipment-tier"
@@ -130,12 +119,12 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
                   </option>
                 ))}
               </ValidatedField>
-              <ValidatedField id="equipment-charac" name="charac" data-cy="charac" label="Charac" type="select">
+              <ValidatedField id="equipment-characters" name="characters" data-cy="characters" label="Character" type="select">
                 <option value="" key="0" />
-                {characs
-                  ? characs.map(otherEntity => (
+                {characters
+                  ? characters.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.server+" - " + otherEntity.name}
                       </option>
                     ))
                   : null}

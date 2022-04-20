@@ -8,22 +8,22 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ICharac } from 'app/shared/model/charac.model';
+import { ICharacters } from 'app/shared/model/characters.model';
 import { Server } from 'app/shared/model/enumerations/server.model';
-import { getEntity, updateEntity, createEntity, reset } from './charac.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './characters.reducer';
 
-export const CharacUpdate = (props: RouteComponentProps<{ id: string }>) => {
+export const CharactersUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const characEntity = useAppSelector(state => state.charac.entity);
-  const loading = useAppSelector(state => state.charac.loading);
-  const updating = useAppSelector(state => state.charac.updating);
-  const updateSuccess = useAppSelector(state => state.charac.updateSuccess);
+  const charactersEntity = useAppSelector(state => state.characters.entity);
+  const loading = useAppSelector(state => state.characters.loading);
+  const updating = useAppSelector(state => state.characters.updating);
+  const updateSuccess = useAppSelector(state => state.characters.updateSuccess);
   const serverValues = Object.keys(Server);
   const handleClose = () => {
-    props.history.push('/charac');
+    props.history.push('/characters');
   };
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export const CharacUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const saveEntity = values => {
     const entity = {
-      ...characEntity,
+      ...charactersEntity,
       ...values,
     };
 
@@ -58,15 +58,15 @@ export const CharacUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ? {}
       : {
           server: 'Azena',
-          ...characEntity,
+          ...charactersEntity,
         };
 
   return (
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="lostarkApp.charac.home.createOrEditLabel" data-cy="CharacCreateUpdateHeading">
-            Create or edit a Charac
+          <h2 id="lostarkApp.characters.home.createOrEditLabel" data-cy="CharactersCreateUpdateHeading">
+            Create or edit a Characters
           </h2>
         </Col>
       </Row>
@@ -76,10 +76,10 @@ export const CharacUpdate = (props: RouteComponentProps<{ id: string }>) => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="charac-id" label="ID" validate={{ required: true }} /> : null}
+              {!isNew ? <ValidatedField name="id" required readOnly id="characters-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField
                 label="Name"
-                id="charac-name"
+                id="characters-name"
                 name="name"
                 data-cy="name"
                 type="text"
@@ -89,7 +89,7 @@ export const CharacUpdate = (props: RouteComponentProps<{ id: string }>) => {
               />
               <ValidatedField
                 label="Adv Class"
-                id="charac-advClass"
+                id="characters-advClass"
                 name="advClass"
                 data-cy="advClass"
                 type="text"
@@ -97,14 +97,14 @@ export const CharacUpdate = (props: RouteComponentProps<{ id: string }>) => {
                   required: { value: true, message: 'This field is required.' },
                 }}
               />
-              <ValidatedField label="Server" id="charac-server" name="server" data-cy="server" type="select">
+              <ValidatedField label="Server" id="characters-server" name="server" data-cy="server" type="select">
                 {serverValues.map(server => (
                   <option value={server} key={server}>
                     {server}
                   </option>
                 ))}
               </ValidatedField>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/charac" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/characters" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Back</span>
@@ -122,4 +122,4 @@ export const CharacUpdate = (props: RouteComponentProps<{ id: string }>) => {
   );
 };
 
-export default CharacUpdate;
+export default CharactersUpdate;

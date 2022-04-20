@@ -30,9 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class EquipmentResourceIT {
 
-    private static final Integer DEFAULT_CHARACTER_ID = 1;
-    private static final Integer UPDATED_CHARACTER_ID = 2;
-
     private static final Integer DEFAULT_TIER = 1;
     private static final Integer UPDATED_TIER = 2;
 
@@ -66,11 +63,7 @@ class EquipmentResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Equipment createEntity(EntityManager em) {
-        Equipment equipment = new Equipment()
-            .characterID(DEFAULT_CHARACTER_ID)
-            .tier(DEFAULT_TIER)
-            .honingLevel(DEFAULT_HONING_LEVEL)
-            .equipmentType(DEFAULT_EQUIPMENT_TYPE);
+        Equipment equipment = new Equipment().tier(DEFAULT_TIER).honingLevel(DEFAULT_HONING_LEVEL).equipmentType(DEFAULT_EQUIPMENT_TYPE);
         return equipment;
     }
 
@@ -81,11 +74,7 @@ class EquipmentResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Equipment createUpdatedEntity(EntityManager em) {
-        Equipment equipment = new Equipment()
-            .characterID(UPDATED_CHARACTER_ID)
-            .tier(UPDATED_TIER)
-            .honingLevel(UPDATED_HONING_LEVEL)
-            .equipmentType(UPDATED_EQUIPMENT_TYPE);
+        Equipment equipment = new Equipment().tier(UPDATED_TIER).honingLevel(UPDATED_HONING_LEVEL).equipmentType(UPDATED_EQUIPMENT_TYPE);
         return equipment;
     }
 
@@ -107,7 +96,6 @@ class EquipmentResourceIT {
         List<Equipment> equipmentList = equipmentRepository.findAll();
         assertThat(equipmentList).hasSize(databaseSizeBeforeCreate + 1);
         Equipment testEquipment = equipmentList.get(equipmentList.size() - 1);
-        assertThat(testEquipment.getCharacterID()).isEqualTo(DEFAULT_CHARACTER_ID);
         assertThat(testEquipment.getTier()).isEqualTo(DEFAULT_TIER);
         assertThat(testEquipment.getHoningLevel()).isEqualTo(DEFAULT_HONING_LEVEL);
         assertThat(testEquipment.getEquipmentType()).isEqualTo(DEFAULT_EQUIPMENT_TYPE);
@@ -129,23 +117,6 @@ class EquipmentResourceIT {
         // Validate the Equipment in the database
         List<Equipment> equipmentList = equipmentRepository.findAll();
         assertThat(equipmentList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void checkCharacterIDIsRequired() throws Exception {
-        int databaseSizeBeforeTest = equipmentRepository.findAll().size();
-        // set the field null
-        equipment.setCharacterID(null);
-
-        // Create the Equipment, which fails.
-
-        restEquipmentMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(equipment)))
-            .andExpect(status().isBadRequest());
-
-        List<Equipment> equipmentList = equipmentRepository.findAll();
-        assertThat(equipmentList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -211,7 +182,6 @@ class EquipmentResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(equipment.getId().intValue())))
-            .andExpect(jsonPath("$.[*].characterID").value(hasItem(DEFAULT_CHARACTER_ID)))
             .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER)))
             .andExpect(jsonPath("$.[*].honingLevel").value(hasItem(DEFAULT_HONING_LEVEL)))
             .andExpect(jsonPath("$.[*].equipmentType").value(hasItem(DEFAULT_EQUIPMENT_TYPE.toString())));
@@ -229,7 +199,6 @@ class EquipmentResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(equipment.getId().intValue()))
-            .andExpect(jsonPath("$.characterID").value(DEFAULT_CHARACTER_ID))
             .andExpect(jsonPath("$.tier").value(DEFAULT_TIER))
             .andExpect(jsonPath("$.honingLevel").value(DEFAULT_HONING_LEVEL))
             .andExpect(jsonPath("$.equipmentType").value(DEFAULT_EQUIPMENT_TYPE.toString()));
@@ -254,11 +223,7 @@ class EquipmentResourceIT {
         Equipment updatedEquipment = equipmentRepository.findById(equipment.getId()).get();
         // Disconnect from session so that the updates on updatedEquipment are not directly saved in db
         em.detach(updatedEquipment);
-        updatedEquipment
-            .characterID(UPDATED_CHARACTER_ID)
-            .tier(UPDATED_TIER)
-            .honingLevel(UPDATED_HONING_LEVEL)
-            .equipmentType(UPDATED_EQUIPMENT_TYPE);
+        updatedEquipment.tier(UPDATED_TIER).honingLevel(UPDATED_HONING_LEVEL).equipmentType(UPDATED_EQUIPMENT_TYPE);
 
         restEquipmentMockMvc
             .perform(
@@ -272,7 +237,6 @@ class EquipmentResourceIT {
         List<Equipment> equipmentList = equipmentRepository.findAll();
         assertThat(equipmentList).hasSize(databaseSizeBeforeUpdate);
         Equipment testEquipment = equipmentList.get(equipmentList.size() - 1);
-        assertThat(testEquipment.getCharacterID()).isEqualTo(UPDATED_CHARACTER_ID);
         assertThat(testEquipment.getTier()).isEqualTo(UPDATED_TIER);
         assertThat(testEquipment.getHoningLevel()).isEqualTo(UPDATED_HONING_LEVEL);
         assertThat(testEquipment.getEquipmentType()).isEqualTo(UPDATED_EQUIPMENT_TYPE);
@@ -346,7 +310,7 @@ class EquipmentResourceIT {
         Equipment partialUpdatedEquipment = new Equipment();
         partialUpdatedEquipment.setId(equipment.getId());
 
-        partialUpdatedEquipment.tier(UPDATED_TIER).honingLevel(UPDATED_HONING_LEVEL).equipmentType(UPDATED_EQUIPMENT_TYPE);
+        partialUpdatedEquipment.honingLevel(UPDATED_HONING_LEVEL).equipmentType(UPDATED_EQUIPMENT_TYPE);
 
         restEquipmentMockMvc
             .perform(
@@ -360,8 +324,7 @@ class EquipmentResourceIT {
         List<Equipment> equipmentList = equipmentRepository.findAll();
         assertThat(equipmentList).hasSize(databaseSizeBeforeUpdate);
         Equipment testEquipment = equipmentList.get(equipmentList.size() - 1);
-        assertThat(testEquipment.getCharacterID()).isEqualTo(DEFAULT_CHARACTER_ID);
-        assertThat(testEquipment.getTier()).isEqualTo(UPDATED_TIER);
+        assertThat(testEquipment.getTier()).isEqualTo(DEFAULT_TIER);
         assertThat(testEquipment.getHoningLevel()).isEqualTo(UPDATED_HONING_LEVEL);
         assertThat(testEquipment.getEquipmentType()).isEqualTo(UPDATED_EQUIPMENT_TYPE);
     }
@@ -378,11 +341,7 @@ class EquipmentResourceIT {
         Equipment partialUpdatedEquipment = new Equipment();
         partialUpdatedEquipment.setId(equipment.getId());
 
-        partialUpdatedEquipment
-            .characterID(UPDATED_CHARACTER_ID)
-            .tier(UPDATED_TIER)
-            .honingLevel(UPDATED_HONING_LEVEL)
-            .equipmentType(UPDATED_EQUIPMENT_TYPE);
+        partialUpdatedEquipment.tier(UPDATED_TIER).honingLevel(UPDATED_HONING_LEVEL).equipmentType(UPDATED_EQUIPMENT_TYPE);
 
         restEquipmentMockMvc
             .perform(
@@ -396,7 +355,6 @@ class EquipmentResourceIT {
         List<Equipment> equipmentList = equipmentRepository.findAll();
         assertThat(equipmentList).hasSize(databaseSizeBeforeUpdate);
         Equipment testEquipment = equipmentList.get(equipmentList.size() - 1);
-        assertThat(testEquipment.getCharacterID()).isEqualTo(UPDATED_CHARACTER_ID);
         assertThat(testEquipment.getTier()).isEqualTo(UPDATED_TIER);
         assertThat(testEquipment.getHoningLevel()).isEqualTo(UPDATED_HONING_LEVEL);
         assertThat(testEquipment.getEquipmentType()).isEqualTo(UPDATED_EQUIPMENT_TYPE);

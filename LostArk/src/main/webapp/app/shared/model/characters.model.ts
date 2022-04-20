@@ -1,7 +1,7 @@
 import { IEquipment } from 'app/shared/model/equipment.model';
 import { Server } from 'app/shared/model/enumerations/server.model';
 
-export interface ICharac {
+export interface ICharacters {
   id?: number;
   name?: string;
   advClass?: string;
@@ -9,4 +9,4 @@ export interface ICharac {
   equipment?: IEquipment[] | null;
 }
 
-export const defaultValue: Readonly<ICharac> = {};
+export const defaultValue: Readonly<ICharacters> = {};

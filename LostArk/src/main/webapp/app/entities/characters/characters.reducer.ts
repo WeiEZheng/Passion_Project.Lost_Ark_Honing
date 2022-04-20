@@ -3,9 +3,9 @@ import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/t
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
-import { ICharac, defaultValue } from 'app/shared/model/charac.model';
+import { ICharacters, defaultValue } from 'app/shared/model/characters.model';
 
-const initialState: EntityState<ICharac> = {
+const initialState: EntityState<ICharacters> = {
   loading: false,
   errorMessage: null,
   entities: [],
@@ -14,28 +14,28 @@ const initialState: EntityState<ICharac> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/characs';
+const apiUrl = 'api/characters';
 
 // Actions
 
-export const getEntities = createAsyncThunk('charac/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+export const getEntities = createAsyncThunk('characters/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}?cacheBuster=${new Date().getTime()}`;
-  return axios.get<ICharac[]>(requestUrl);
+  return axios.get<ICharacters[]>(requestUrl);
 });
 
 export const getEntity = createAsyncThunk(
-  'charac/fetch_entity',
+  'characters/fetch_entity',
   async (id: string | number) => {
     const requestUrl = `${apiUrl}/${id}`;
-    return axios.get<ICharac>(requestUrl);
+    return axios.get<ICharacters>(requestUrl);
   },
   { serializeError: serializeAxiosError }
 );
 
 export const createEntity = createAsyncThunk(
-  'charac/create_entity',
-  async (entity: ICharac, thunkAPI) => {
-    const result = await axios.post<ICharac>(apiUrl, cleanEntity(entity));
+  'characters/create_entity',
+  async (entity: ICharacters, thunkAPI) => {
+    const result = await axios.post<ICharacters>(apiUrl, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -43,9 +43,9 @@ export const createEntity = createAsyncThunk(
 );
 
 export const updateEntity = createAsyncThunk(
-  'charac/update_entity',
-  async (entity: ICharac, thunkAPI) => {
-    const result = await axios.put<ICharac>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'characters/update_entity',
+  async (entity: ICharacters, thunkAPI) => {
+    const result = await axios.put<ICharacters>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -53,9 +53,9 @@ export const updateEntity = createAsyncThunk(
 );
 
 export const partialUpdateEntity = createAsyncThunk(
-  'charac/partial_update_entity',
-  async (entity: ICharac, thunkAPI) => {
-    const result = await axios.patch<ICharac>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'characters/partial_update_entity',
+  async (entity: ICharacters, thunkAPI) => {
+    const result = await axios.patch<ICharacters>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -63,10 +63,10 @@ export const partialUpdateEntity = createAsyncThunk(
 );
 
 export const deleteEntity = createAsyncThunk(
-  'charac/delete_entity',
+  'characters/delete_entity',
   async (id: string | number, thunkAPI) => {
     const requestUrl = `${apiUrl}/${id}`;
-    const result = await axios.delete<ICharac>(requestUrl);
+    const result = await axios.delete<ICharacters>(requestUrl);
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -75,8 +75,8 @@ export const deleteEntity = createAsyncThunk(
 
 // slice
 
-export const CharacSlice = createEntitySlice({
-  name: 'charac',
+export const CharactersSlice = createEntitySlice({
+  name: 'characters',
   initialState,
   extraReducers(builder) {
     builder
@@ -117,7 +117,7 @@ export const CharacSlice = createEntitySlice({
   },
 });
 
-export const { reset } = CharacSlice.actions;
+export const { reset } = CharactersSlice.actions;
 
 // Reducer
-export default CharacSlice.reducer;
+export default CharactersSlice.reducer;

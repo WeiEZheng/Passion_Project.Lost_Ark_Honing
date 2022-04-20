@@ -25,10 +25,6 @@ public class Equipment implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "character_id", nullable = false)
-    private Integer characterID;
-
-    @NotNull
     @Column(name = "tier", nullable = false)
     private Integer tier;
 
@@ -43,7 +39,7 @@ public class Equipment implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "equipment" }, allowSetters = true)
-    private Charac charac;
+    private Characters characters;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -58,19 +54,6 @@ public class Equipment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getCharacterID() {
-        return this.characterID;
-    }
-
-    public Equipment characterID(Integer characterID) {
-        this.setCharacterID(characterID);
-        return this;
-    }
-
-    public void setCharacterID(Integer characterID) {
-        this.characterID = characterID;
     }
 
     public Integer getTier() {
@@ -112,16 +95,16 @@ public class Equipment implements Serializable {
         this.equipmentType = equipmentType;
     }
 
-    public Charac getCharac() {
-        return this.charac;
+    public Characters getCharacters() {
+        return this.characters;
     }
 
-    public void setCharac(Charac charac) {
-        this.charac = charac;
+    public void setCharacters(Characters characters) {
+        this.characters = characters;
     }
 
-    public Equipment charac(Charac charac) {
-        this.setCharac(charac);
+    public Equipment characters(Characters characters) {
+        this.setCharacters(characters);
         return this;
     }
 
@@ -149,7 +132,6 @@ public class Equipment implements Serializable {
     public String toString() {
         return "Equipment{" +
             "id=" + getId() +
-            ", characterID=" + getCharacterID() +
             ", tier=" + getTier() +
             ", honingLevel=" + getHoningLevel() +
             ", equipmentType='" + getEquipmentType() + "'" +

@@ -7,14 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ICharac } from 'app/shared/model/charac.model';
-import { getEntities } from './charac.reducer';
+import { ICharacters } from 'app/shared/model/characters.model';
+import { getEntities } from './characters.reducer';
 
-export const Charac = (props: RouteComponentProps<{ url: string }>) => {
+export const Characters = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
-  const characList = useAppSelector(state => state.charac.entities);
-  const loading = useAppSelector(state => state.charac.loading);
+  const charactersList = useAppSelector(state => state.characters.entities);
+  const loading = useAppSelector(state => state.characters.loading);
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -28,20 +28,20 @@ export const Charac = (props: RouteComponentProps<{ url: string }>) => {
 
   return (
     <div>
-      <h2 id="charac-heading" data-cy="CharacHeading">
-        Characs
+      <h2 id="characters-heading" data-cy="CharactersHeading">
+        Characters
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh List
           </Button>
-          <Link to="/charac/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/characters/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create new Charac
+            &nbsp; Create new Characters
           </Link>
         </div>
       </h2>
       <div className="table-responsive">
-        {characList && characList.length > 0 ? (
+        {charactersList && charactersList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -53,25 +53,25 @@ export const Charac = (props: RouteComponentProps<{ url: string }>) => {
               </tr>
             </thead>
             <tbody>
-              {characList.map((charac, i) => (
+              {charactersList.map((characters, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/charac/${charac.id}`} color="link" size="sm">
-                      {charac.id}
+                    <Button tag={Link} to={`/characters/${characters.id}`} color="link" size="sm">
+                      {characters.id}
                     </Button>
                   </td>
-                  <td>{charac.name}</td>
-                  <td>{charac.advClass}</td>
-                  <td>{charac.server}</td>
+                  <td>{characters.name}</td>
+                  <td>{characters.advClass}</td>
+                  <td>{characters.server}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/charac/${charac.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/characters/${characters.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`/charac/${charac.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button tag={Link} to={`/characters/${characters.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/charac/${charac.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/characters/${characters.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -81,11 +81,11 @@ export const Charac = (props: RouteComponentProps<{ url: string }>) => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Characs found</div>
+          !loading && <div className="alert alert-warning">No Characters found</div>
         )}
       </div>
     </div>
   );
 };
 
-export default Charac;
+export default Characters;

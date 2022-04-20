@@ -1,9 +1,9 @@
 {
   "applications": "*",
-  "changelogDate": "20220420000813",
+  "changelogDate": "20220420003909",
   "dto": "no",
   "embedded": false,
-  "entityTableName": "charac",
+  "entityTableName": "characters",
   "fields": [
     {
       "fieldName": "name",
@@ -24,13 +24,13 @@
   ],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
-  "name": "Charac",
+  "name": "Characters",
   "pagination": "no",
   "readOnly": false,
   "relationships": [
     {
       "otherEntityName": "equipment",
-      "otherEntityRelationshipName": "charac",
+      "otherEntityRelationshipName": "characters",
       "relationshipName": "equipment",
       "relationshipType": "one-to-many"
     }

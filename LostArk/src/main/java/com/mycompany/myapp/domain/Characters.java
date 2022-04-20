@@ -11,12 +11,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * A Charac.
+ * A Characters.
  */
 @Entity
-@Table(name = "charac")
+@Table(name = "characters")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Charac implements Serializable {
+public class Characters implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,9 +39,9 @@ public class Charac implements Serializable {
     @Column(name = "server", nullable = false)
     private Server server;
 
-    @OneToMany(mappedBy = "charac")
+    @OneToMany(mappedBy = "characters")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "charac" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "characters" }, allowSetters = true)
     private Set<Equipment> equipment = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -50,7 +50,7 @@ public class Charac implements Serializable {
         return this.id;
     }
 
-    public Charac id(Long id) {
+    public Characters id(Long id) {
         this.setId(id);
         return this;
     }
@@ -63,7 +63,7 @@ public class Charac implements Serializable {
         return this.name;
     }
 
-    public Charac name(String name) {
+    public Characters name(String name) {
         this.setName(name);
         return this;
     }
@@ -76,7 +76,7 @@ public class Charac implements Serializable {
         return this.advClass;
     }
 
-    public Charac advClass(String advClass) {
+    public Characters advClass(String advClass) {
         this.setAdvClass(advClass);
         return this;
     }
@@ -89,7 +89,7 @@ public class Charac implements Serializable {
         return this.server;
     }
 
-    public Charac server(Server server) {
+    public Characters server(Server server) {
         this.setServer(server);
         return this;
     }
@@ -104,28 +104,28 @@ public class Charac implements Serializable {
 
     public void setEquipment(Set<Equipment> equipment) {
         if (this.equipment != null) {
-            this.equipment.forEach(i -> i.setCharac(null));
+            this.equipment.forEach(i -> i.setCharacters(null));
         }
         if (equipment != null) {
-            equipment.forEach(i -> i.setCharac(this));
+            equipment.forEach(i -> i.setCharacters(this));
         }
         this.equipment = equipment;
     }
 
-    public Charac equipment(Set<Equipment> equipment) {
+    public Characters equipment(Set<Equipment> equipment) {
         this.setEquipment(equipment);
         return this;
     }
 
-    public Charac addEquipment(Equipment equipment) {
+    public Characters addEquipment(Equipment equipment) {
         this.equipment.add(equipment);
-        equipment.setCharac(this);
+        equipment.setCharacters(this);
         return this;
     }
 
-    public Charac removeEquipment(Equipment equipment) {
+    public Characters removeEquipment(Equipment equipment) {
         this.equipment.remove(equipment);
-        equipment.setCharac(null);
+        equipment.setCharacters(null);
         return this;
     }
 
@@ -136,10 +136,10 @@ public class Charac implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Charac)) {
+        if (!(o instanceof Characters)) {
             return false;
         }
-        return id != null && id.equals(((Charac) o).id);
+        return id != null && id.equals(((Characters) o).id);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class Charac implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "Charac{" +
+        return "Characters{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", advClass='" + getAdvClass() + "'" +

@@ -9,8 +9,8 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/market-price">
         Market Price
       </MenuItem>
-      <MenuItem icon="asterisk" to="/charac">
-        Charac
+      <MenuItem icon="asterisk" to="/characters">
+        Characters
       </MenuItem>
       <MenuItem icon="asterisk" to="/equipment">
         Equipment

@@ -46,11 +46,10 @@ export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Character ID</th>
                 <th>Tier</th>
                 <th>Honing Level</th>
                 <th>Equipment Type</th>
-                <th>Charac</th>
+                <th>Characters</th>
                 <th />
               </tr>
             </thead>
@@ -62,11 +61,12 @@ export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
                       {equipment.id}
                     </Button>
                   </td>
-                  <td>{equipment.characterID}</td>
                   <td>{equipment.tier}</td>
                   <td>{equipment.honingLevel}</td>
                   <td>{equipment.equipmentType}</td>
-                  <td>{equipment.charac ? <Link to={`/charac/${equipment.charac.id}`}>{equipment.charac.id}</Link> : ''}</td>
+                  <td>
+                    {equipment.characters ? <Link to={`/characters/${equipment.characters.name}`}>{equipment.characters.name}</Link> : ''}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/equipment/${equipment.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -4,9 +4,17 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, { createEntity, deleteEntity, getEntities, getEntity, updateEntity, partialUpdateEntity, reset } from './charac.reducer';
+import reducer, {
+  createEntity,
+  deleteEntity,
+  getEntities,
+  getEntity,
+  updateEntity,
+  partialUpdateEntity,
+  reset,
+} from './characters.reducer';
 import { EntityState } from 'app/shared/reducers/reducer.utils';
-import { ICharac, defaultValue } from 'app/shared/model/charac.model';
+import { ICharacters, defaultValue } from 'app/shared/model/characters.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
@@ -17,7 +25,7 @@ describe('Entities reducer tests', () => {
     }
   }
 
-  const initialState: EntityState<ICharac> = {
+  const initialState: EntityState<ICharacters> = {
     loading: false,
     errorMessage: null,
     entities: [],
@@ -178,7 +186,7 @@ describe('Entities reducer tests', () => {
       axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
-    it('dispatches FETCH_CHARAC_LIST actions', async () => {
+    it('dispatches FETCH_CHARACTERS_LIST actions', async () => {
       const expectedActions = [
         {
           type: getEntities.pending.type,
@@ -193,7 +201,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches FETCH_CHARAC actions', async () => {
+    it('dispatches FETCH_CHARACTERS actions', async () => {
       const expectedActions = [
         {
           type: getEntity.pending.type,
@@ -208,7 +216,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches CREATE_CHARAC actions', async () => {
+    it('dispatches CREATE_CHARACTERS actions', async () => {
       const expectedActions = [
         {
           type: createEntity.pending.type,
@@ -227,7 +235,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches UPDATE_CHARAC actions', async () => {
+    it('dispatches UPDATE_CHARACTERS actions', async () => {
       const expectedActions = [
         {
           type: updateEntity.pending.type,
@@ -246,7 +254,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches PARTIAL_UPDATE_CHARAC actions', async () => {
+    it('dispatches PARTIAL_UPDATE_CHARACTERS actions', async () => {
       const expectedActions = [
         {
           type: partialUpdateEntity.pending.type,
@@ -265,7 +273,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches DELETE_CHARAC actions', async () => {
+    it('dispatches DELETE_CHARACTERS actions', async () => {
       const expectedActions = [
         {
           type: deleteEntity.pending.type,
