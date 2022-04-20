@@ -85,7 +85,17 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="market-price-id" label="ID" validate={{ required: true }} /> : null}
+              <ValidatedField id="market-price-item" name="item" data-cy="item" label="Item" type="select"
+              validate={{required: { value: true, message: 'This field is required.'}}}>
+                <option value="" key="0" />
+                {items
+                  ? items.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.itemName}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <ValidatedField
                 label="Item Price Per Stack"
                 id="market-price-itemPricePerStack"
@@ -108,27 +118,6 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
                   validate: v => isNumber(v) || 'This field should be a number.',
                 }}
               />
-              <ValidatedField
-                label="Time Updated"
-                id="market-price-timeUpdated"
-                name="timeUpdated"
-                data-cy="timeUpdated"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: 'This field is required.' },
-                }}
-              />
-              <ValidatedField id="market-price-item" name="item" data-cy="item" label="Item" type="select">
-                <option value="" key="0" />
-                {items
-                  ? items.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/market-price" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

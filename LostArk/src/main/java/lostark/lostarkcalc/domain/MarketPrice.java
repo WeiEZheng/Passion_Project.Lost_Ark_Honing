@@ -35,6 +35,7 @@ public class MarketPrice implements Serializable {
     @Column(name = "time_updated", nullable = false)
     private Instant timeUpdated;
 
+    @NotNull
     @OneToOne
     @JoinColumn(unique = true)
     private Item item;
