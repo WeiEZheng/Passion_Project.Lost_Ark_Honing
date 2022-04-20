@@ -1,0 +1,47 @@
+{
+  "applications": "*",
+  "changelogDate": "20220420151210",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "characters",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "advClass",
+      "fieldType": "AdvClasses",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Artillerist,Bard,Berserker,Deathblade,Deadeye,Gunlancer,Gunslinger,Paladin,Scrapper,Shadowhunter,Sharpshooter,Sorceress,Soulfist,Striker,Wardancer"
+    },
+    {
+      "fieldName": "server",
+      "fieldType": "Server",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Azena,Avesta,Ladon,Una,Galatur,Kharmine,Regulus,Karta,Elzowin,Sasha,Adrinne,Aldebaran,Zosma,Vykas,Danube"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Characters",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "equipment",
+      "otherEntityRelationshipName": "characters",
+      "relationshipName": "equipment",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "characters",
+      "relationshipName": "belongTo",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
