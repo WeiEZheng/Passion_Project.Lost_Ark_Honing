@@ -7,14 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IEquipment } from 'app/shared/model/equipment.model';
-import { getEntities } from './equipment.reducer';
+import { IItem } from 'app/shared/model/item.model';
+import { getEntities } from './item.reducer';
 
-export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
+export const Item = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
-  const equipmentList = useAppSelector(state => state.equipment.entities);
-  const loading = useAppSelector(state => state.equipment.loading);
+  const itemList = useAppSelector(state => state.item.entities);
+  const loading = useAppSelector(state => state.item.loading);
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -28,54 +28,46 @@ export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
 
   return (
     <div>
-      <h2 id="equipment-heading" data-cy="EquipmentHeading">
-        Equipment
+      <h2 id="item-heading" data-cy="ItemHeading">
+        Items
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh List
           </Button>
-          <Link to="/equipment/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/item/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create new Equipment
+            &nbsp; Create new Item
           </Link>
         </div>
       </h2>
       <div className="table-responsive">
-        {equipmentList && equipmentList.length > 0 ? (
+        {itemList && itemList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Tier</th>
-                <th>Honing Level</th>
-                <th>Equipment Type</th>
-                <th>Characters</th>
+                <th>Item Name</th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {equipmentList.map((equipment, i) => (
+              {itemList.map((item, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/equipment/${equipment.id}`} color="link" size="sm">
-                      {equipment.id}
+                    <Button tag={Link} to={`/item/${item.id}`} color="link" size="sm">
+                      {item.id}
                     </Button>
                   </td>
-                  <td>{equipment.tier}</td>
-                  <td>{equipment.honingLevel}</td>
-                  <td>{equipment.equipmentType}</td>
-                  <td>
-                    {equipment.characters ? <Link to={`/characters/${equipment.characters.id}`}>{equipment.characters.id}</Link> : ''}
-                  </td>
+                  <td>{item.itemName}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/equipment/${equipment.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/item/${item.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`/equipment/${equipment.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button tag={Link} to={`/item/${item.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/equipment/${equipment.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/item/${item.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -85,11 +77,11 @@ export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Equipment found</div>
+          !loading && <div className="alert alert-warning">No Items found</div>
         )}
       </div>
     </div>
   );
 };
 
-export default Equipment;
+export default Item;

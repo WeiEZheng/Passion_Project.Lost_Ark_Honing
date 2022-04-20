@@ -31,9 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class MarketPriceResourceIT {
 
-    private static final String DEFAULT_ITEM_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_ITEM_NAME = "BBBBBBBBBB";
-
     private static final Integer DEFAULT_ITEM_PRICE_PER_STACK = 1;
     private static final Integer UPDATED_ITEM_PRICE_PER_STACK = 2;
 
@@ -68,7 +65,6 @@ class MarketPriceResourceIT {
      */
     public static MarketPrice createEntity(EntityManager em) {
         MarketPrice marketPrice = new MarketPrice()
-            .itemName(DEFAULT_ITEM_NAME)
             .itemPricePerStack(DEFAULT_ITEM_PRICE_PER_STACK)
             .numberPerStack(DEFAULT_NUMBER_PER_STACK)
             .timeUpdated(DEFAULT_TIME_UPDATED);
@@ -83,7 +79,6 @@ class MarketPriceResourceIT {
      */
     public static MarketPrice createUpdatedEntity(EntityManager em) {
         MarketPrice marketPrice = new MarketPrice()
-            .itemName(UPDATED_ITEM_NAME)
             .itemPricePerStack(UPDATED_ITEM_PRICE_PER_STACK)
             .numberPerStack(UPDATED_NUMBER_PER_STACK)
             .timeUpdated(UPDATED_TIME_UPDATED);
@@ -108,7 +103,6 @@ class MarketPriceResourceIT {
         List<MarketPrice> marketPriceList = marketPriceRepository.findAll();
         assertThat(marketPriceList).hasSize(databaseSizeBeforeCreate + 1);
         MarketPrice testMarketPrice = marketPriceList.get(marketPriceList.size() - 1);
-        assertThat(testMarketPrice.getItemName()).isEqualTo(DEFAULT_ITEM_NAME);
         assertThat(testMarketPrice.getItemPricePerStack()).isEqualTo(DEFAULT_ITEM_PRICE_PER_STACK);
         assertThat(testMarketPrice.getNumberPerStack()).isEqualTo(DEFAULT_NUMBER_PER_STACK);
         assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(DEFAULT_TIME_UPDATED);
@@ -130,23 +124,6 @@ class MarketPriceResourceIT {
         // Validate the MarketPrice in the database
         List<MarketPrice> marketPriceList = marketPriceRepository.findAll();
         assertThat(marketPriceList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void checkItemNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = marketPriceRepository.findAll().size();
-        // set the field null
-        marketPrice.setItemName(null);
-
-        // Create the MarketPrice, which fails.
-
-        restMarketPriceMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(marketPrice)))
-            .andExpect(status().isBadRequest());
-
-        List<MarketPrice> marketPriceList = marketPriceRepository.findAll();
-        assertThat(marketPriceList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -212,7 +189,6 @@ class MarketPriceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(marketPrice.getId().intValue())))
-            .andExpect(jsonPath("$.[*].itemName").value(hasItem(DEFAULT_ITEM_NAME)))
             .andExpect(jsonPath("$.[*].itemPricePerStack").value(hasItem(DEFAULT_ITEM_PRICE_PER_STACK)))
             .andExpect(jsonPath("$.[*].numberPerStack").value(hasItem(DEFAULT_NUMBER_PER_STACK)))
             .andExpect(jsonPath("$.[*].timeUpdated").value(hasItem(DEFAULT_TIME_UPDATED.toString())));
@@ -230,7 +206,6 @@ class MarketPriceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(marketPrice.getId().intValue()))
-            .andExpect(jsonPath("$.itemName").value(DEFAULT_ITEM_NAME))
             .andExpect(jsonPath("$.itemPricePerStack").value(DEFAULT_ITEM_PRICE_PER_STACK))
             .andExpect(jsonPath("$.numberPerStack").value(DEFAULT_NUMBER_PER_STACK))
             .andExpect(jsonPath("$.timeUpdated").value(DEFAULT_TIME_UPDATED.toString()));
@@ -256,7 +231,6 @@ class MarketPriceResourceIT {
         // Disconnect from session so that the updates on updatedMarketPrice are not directly saved in db
         em.detach(updatedMarketPrice);
         updatedMarketPrice
-            .itemName(UPDATED_ITEM_NAME)
             .itemPricePerStack(UPDATED_ITEM_PRICE_PER_STACK)
             .numberPerStack(UPDATED_NUMBER_PER_STACK)
             .timeUpdated(UPDATED_TIME_UPDATED);
@@ -273,7 +247,6 @@ class MarketPriceResourceIT {
         List<MarketPrice> marketPriceList = marketPriceRepository.findAll();
         assertThat(marketPriceList).hasSize(databaseSizeBeforeUpdate);
         MarketPrice testMarketPrice = marketPriceList.get(marketPriceList.size() - 1);
-        assertThat(testMarketPrice.getItemName()).isEqualTo(UPDATED_ITEM_NAME);
         assertThat(testMarketPrice.getItemPricePerStack()).isEqualTo(UPDATED_ITEM_PRICE_PER_STACK);
         assertThat(testMarketPrice.getNumberPerStack()).isEqualTo(UPDATED_NUMBER_PER_STACK);
         assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(UPDATED_TIME_UPDATED);
@@ -347,8 +320,6 @@ class MarketPriceResourceIT {
         MarketPrice partialUpdatedMarketPrice = new MarketPrice();
         partialUpdatedMarketPrice.setId(marketPrice.getId());
 
-        partialUpdatedMarketPrice.timeUpdated(UPDATED_TIME_UPDATED);
-
         restMarketPriceMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedMarketPrice.getId())
@@ -361,10 +332,9 @@ class MarketPriceResourceIT {
         List<MarketPrice> marketPriceList = marketPriceRepository.findAll();
         assertThat(marketPriceList).hasSize(databaseSizeBeforeUpdate);
         MarketPrice testMarketPrice = marketPriceList.get(marketPriceList.size() - 1);
-        assertThat(testMarketPrice.getItemName()).isEqualTo(DEFAULT_ITEM_NAME);
         assertThat(testMarketPrice.getItemPricePerStack()).isEqualTo(DEFAULT_ITEM_PRICE_PER_STACK);
         assertThat(testMarketPrice.getNumberPerStack()).isEqualTo(DEFAULT_NUMBER_PER_STACK);
-        assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(UPDATED_TIME_UPDATED);
+        assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(DEFAULT_TIME_UPDATED);
     }
 
     @Test
@@ -380,7 +350,6 @@ class MarketPriceResourceIT {
         partialUpdatedMarketPrice.setId(marketPrice.getId());
 
         partialUpdatedMarketPrice
-            .itemName(UPDATED_ITEM_NAME)
             .itemPricePerStack(UPDATED_ITEM_PRICE_PER_STACK)
             .numberPerStack(UPDATED_NUMBER_PER_STACK)
             .timeUpdated(UPDATED_TIME_UPDATED);
@@ -397,7 +366,6 @@ class MarketPriceResourceIT {
         List<MarketPrice> marketPriceList = marketPriceRepository.findAll();
         assertThat(marketPriceList).hasSize(databaseSizeBeforeUpdate);
         MarketPrice testMarketPrice = marketPriceList.get(marketPriceList.size() - 1);
-        assertThat(testMarketPrice.getItemName()).isEqualTo(UPDATED_ITEM_NAME);
         assertThat(testMarketPrice.getItemPricePerStack()).isEqualTo(UPDATED_ITEM_PRICE_PER_STACK);
         assertThat(testMarketPrice.getNumberPerStack()).isEqualTo(UPDATED_NUMBER_PER_STACK);
         assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(UPDATED_TIME_UPDATED);

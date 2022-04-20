@@ -24,10 +24,6 @@ public class MarketPrice implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "item_name", nullable = false)
-    private String itemName;
-
-    @NotNull
     @Column(name = "item_price_per_stack", nullable = false)
     private Integer itemPricePerStack;
 
@@ -38,6 +34,10 @@ public class MarketPrice implements Serializable {
     @NotNull
     @Column(name = "time_updated", nullable = false)
     private Instant timeUpdated;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Item item;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -52,19 +52,6 @@ public class MarketPrice implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getItemName() {
-        return this.itemName;
-    }
-
-    public MarketPrice itemName(String itemName) {
-        this.setItemName(itemName);
-        return this;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
     }
 
     public Integer getItemPricePerStack() {
@@ -106,6 +93,19 @@ public class MarketPrice implements Serializable {
         this.timeUpdated = timeUpdated;
     }
 
+    public Item getItem() {
+        return this.item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public MarketPrice item(Item item) {
+        this.setItem(item);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -130,7 +130,6 @@ public class MarketPrice implements Serializable {
     public String toString() {
         return "MarketPrice{" +
             "id=" + getId() +
-            ", itemName='" + getItemName() + "'" +
             ", itemPricePerStack=" + getItemPricePerStack() +
             ", numberPerStack=" + getNumberPerStack() +
             ", timeUpdated='" + getTimeUpdated() + "'" +

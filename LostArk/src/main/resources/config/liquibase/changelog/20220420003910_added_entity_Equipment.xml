@@ -14,7 +14,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="tier" type="integer">
+            <column name="tier" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="honing_level" type="integer">
@@ -47,7 +47,7 @@
                   tableName="equipment"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="tier" type="numeric"/>
+            <column name="tier" type="string"/>
             <column name="honing_level" type="numeric"/>
             <column name="equipment_type" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

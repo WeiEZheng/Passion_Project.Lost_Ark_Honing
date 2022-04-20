@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IItem } from 'app/shared/model/item.model';
+import { getEntities as getItems } from 'app/entities/item/item.reducer';
 import { IMarketPrice } from 'app/shared/model/market-price.model';
 import { getEntity, updateEntity, createEntity, reset } from './market-price.reducer';
 
@@ -16,6 +18,7 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
+  const items = useAppSelector(state => state.item.entities);
   const marketPriceEntity = useAppSelector(state => state.marketPrice.entity);
   const loading = useAppSelector(state => state.marketPrice.loading);
   const updating = useAppSelector(state => state.marketPrice.updating);
@@ -30,6 +33,8 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
     } else {
       dispatch(getEntity(props.match.params.id));
     }
+
+    dispatch(getItems({}));
   }, []);
 
   useEffect(() => {
@@ -44,6 +49,7 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
     const entity = {
       ...marketPriceEntity,
       ...values,
+      item: items.find(it => it.id.toString() === values.item.toString()),
     };
 
     if (isNew) {
@@ -61,6 +67,7 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
       : {
           ...marketPriceEntity,
           timeUpdated: convertDateTimeFromServer(marketPriceEntity.timeUpdated),
+          item: marketPriceEntity?.item?.id,
         };
 
   return (
@@ -79,16 +86,6 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="market-price-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField
-                label="Item Name"
-                id="market-price-itemName"
-                name="itemName"
-                data-cy="itemName"
-                type="text"
-                validate={{
-                  required: { value: true, message: 'This field is required.' },
-                }}
-              />
               <ValidatedField
                 label="Item Price Per Stack"
                 id="market-price-itemPricePerStack"
@@ -122,6 +119,16 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
                   required: { value: true, message: 'This field is required.' },
                 }}
               />
+              <ValidatedField id="market-price-item" name="item" data-cy="item" label="Item" type="select">
+                <option value="" key="0" />
+                {items
+                  ? items.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/market-price" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

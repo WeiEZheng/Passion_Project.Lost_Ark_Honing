@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Equipment;
 import com.mycompany.myapp.domain.enumeration.EquipType;
+import com.mycompany.myapp.domain.enumeration.TierEnum;
 import com.mycompany.myapp.repository.EquipmentRepository;
 import java.util.List;
 import java.util.Random;
@@ -30,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class EquipmentResourceIT {
 
-    private static final Integer DEFAULT_TIER = 1;
-    private static final Integer UPDATED_TIER = 2;
+    private static final TierEnum DEFAULT_TIER = TierEnum.Tier1;
+    private static final TierEnum UPDATED_TIER = TierEnum.Tier2;
 
     private static final Integer DEFAULT_HONING_LEVEL = 1;
     private static final Integer UPDATED_HONING_LEVEL = 2;
@@ -182,7 +183,7 @@ class EquipmentResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(equipment.getId().intValue())))
-            .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER)))
+            .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER.toString())))
             .andExpect(jsonPath("$.[*].honingLevel").value(hasItem(DEFAULT_HONING_LEVEL)))
             .andExpect(jsonPath("$.[*].equipmentType").value(hasItem(DEFAULT_EQUIPMENT_TYPE.toString())));
     }
@@ -199,7 +200,7 @@ class EquipmentResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(equipment.getId().intValue()))
-            .andExpect(jsonPath("$.tier").value(DEFAULT_TIER))
+            .andExpect(jsonPath("$.tier").value(DEFAULT_TIER.toString()))
             .andExpect(jsonPath("$.honingLevel").value(DEFAULT_HONING_LEVEL))
             .andExpect(jsonPath("$.equipmentType").value(DEFAULT_EQUIPMENT_TYPE.toString()));
     }

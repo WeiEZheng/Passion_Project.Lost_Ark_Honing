@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ICharacters } from 'app/shared/model/characters.model';
 import { getEntities as getCharacters } from 'app/entities/characters/characters.reducer';
 import { IEquipment } from 'app/shared/model/equipment.model';
+import { TierEnum } from 'app/shared/model/enumerations/tier-enum.model';
 import { EquipType } from 'app/shared/model/enumerations/equip-type.model';
 import { getEntity, updateEntity, createEntity, reset } from './equipment.reducer';
 
@@ -24,6 +25,7 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const loading = useAppSelector(state => state.equipment.loading);
   const updating = useAppSelector(state => state.equipment.updating);
   const updateSuccess = useAppSelector(state => state.equipment.updateSuccess);
+  const tierEnumValues = Object.keys(TierEnum);
   const equipTypeValues = Object.keys(EquipType);
   const handleClose = () => {
     props.history.push('/equipment');
@@ -63,6 +65,7 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
     isNew
       ? {}
       : {
+          tier: 'Tier1',
           equipmentType: 'Armor',
           ...equipmentEntity,
           characters: equipmentEntity?.characters?.id,
@@ -84,17 +87,13 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="equipment-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField
-                label="Tier"
-                id="equipment-tier"
-                name="tier"
-                data-cy="tier"
-                type="text"
-                validate={{
-                  required: { value: true, message: 'This field is required.' },
-                  validate: v => isNumber(v) || 'This field should be a number.',
-                }}
-              />
+              <ValidatedField label="Tier" id="equipment-tier" name="tier" data-cy="tier" type="select">
+                {tierEnumValues.map(tierEnum => (
+                  <option value={tierEnum} key={tierEnum}>
+                    {tierEnum}
+                  </option>
+                ))}
+              </ValidatedField>
               <ValidatedField
                 label="Honing Level"
                 id="equipment-honingLevel"
@@ -119,12 +118,12 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
                   </option>
                 ))}
               </ValidatedField>
-              <ValidatedField id="equipment-characters" name="characters" data-cy="characters" label="Character" type="select">
+              <ValidatedField id="equipment-characters" name="characters" data-cy="characters" label="Characters" type="select">
                 <option value="" key="0" />
                 {characters
                   ? characters.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.server+" - " + otherEntity.name}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

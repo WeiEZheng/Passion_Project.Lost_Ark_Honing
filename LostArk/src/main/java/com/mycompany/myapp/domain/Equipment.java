@@ -2,6 +2,7 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mycompany.myapp.domain.enumeration.EquipType;
+import com.mycompany.myapp.domain.enumeration.TierEnum;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -25,8 +26,9 @@ public class Equipment implements Serializable {
     private Long id;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "tier", nullable = false)
-    private Integer tier;
+    private TierEnum tier;
 
     @NotNull
     @Column(name = "honing_level", nullable = false)
@@ -56,16 +58,16 @@ public class Equipment implements Serializable {
         this.id = id;
     }
 
-    public Integer getTier() {
+    public TierEnum getTier() {
         return this.tier;
     }
 
-    public Equipment tier(Integer tier) {
+    public Equipment tier(TierEnum tier) {
         this.setTier(tier);
         return this;
     }
 
-    public void setTier(Integer tier) {
+    public void setTier(TierEnum tier) {
         this.tier = tier;
     }
 
@@ -132,7 +134,7 @@ public class Equipment implements Serializable {
     public String toString() {
         return "Equipment{" +
             "id=" + getId() +
-            ", tier=" + getTier() +
+            ", tier='" + getTier() + "'" +
             ", honingLevel=" + getHoningLevel() +
             ", equipmentType='" + getEquipmentType() + "'" +
             "}";

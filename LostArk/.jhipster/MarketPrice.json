@@ -6,11 +6,6 @@
   "entityTableName": "market_price",
   "fields": [
     {
-      "fieldName": "itemName",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "itemPricePerStack",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
@@ -31,6 +26,14 @@
   "name": "MarketPrice",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "item",
+      "otherEntityRelationshipName": "marketPrice",
+      "ownerSide": true,
+      "relationshipName": "item",
+      "relationshipType": "one-to-one"
+    }
+  ],
   "service": "serviceImpl"
 }

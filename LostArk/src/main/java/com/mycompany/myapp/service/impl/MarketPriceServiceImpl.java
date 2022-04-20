@@ -44,9 +44,6 @@ public class MarketPriceServiceImpl implements MarketPriceService {
         return marketPriceRepository
             .findById(marketPrice.getId())
             .map(existingMarketPrice -> {
-                if (marketPrice.getItemName() != null) {
-                    existingMarketPrice.setItemName(marketPrice.getItemName());
-                }
                 if (marketPrice.getItemPricePerStack() != null) {
                     existingMarketPrice.setItemPricePerStack(marketPrice.getItemPricePerStack());
                 }
