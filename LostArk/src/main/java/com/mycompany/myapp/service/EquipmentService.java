@@ -3,6 +3,8 @@ package com.mycompany.myapp.service;
 import com.mycompany.myapp.domain.Equipment;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Service Interface for managing {@link Equipment}.
@@ -38,6 +40,14 @@ public interface EquipmentService {
      * @return the list of entities.
      */
     List<Equipment> findAll();
+
+    /**
+     * Get all the equipment with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<Equipment> findAllWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" equipment.

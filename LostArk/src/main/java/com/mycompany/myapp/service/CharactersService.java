@@ -3,6 +3,8 @@ package com.mycompany.myapp.service;
 import com.mycompany.myapp.domain.Characters;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Service Interface for managing {@link Characters}.
@@ -38,6 +40,14 @@ public interface CharactersService {
      * @return the list of entities.
      */
     List<Characters> findAll();
+
+    /**
+     * Get all the characters with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<Characters> findAllWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" characters.

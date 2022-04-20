@@ -1,10 +1,8 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mycompany.myapp.domain.enumeration.AdvClasses;
 import com.mycompany.myapp.domain.enumeration.Server;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -31,18 +29,17 @@ public class Characters implements Serializable {
     private String name;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "adv_class", nullable = false)
-    private String advClass;
+    private AdvClasses advClass;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "server", nullable = false)
     private Server server;
 
-    @OneToMany(mappedBy = "characters")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "characters" }, allowSetters = true)
-    private Set<Equipment> equipment = new HashSet<>();
+    @ManyToOne
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -72,16 +69,16 @@ public class Characters implements Serializable {
         this.name = name;
     }
 
-    public String getAdvClass() {
+    public AdvClasses getAdvClass() {
         return this.advClass;
     }
 
-    public Characters advClass(String advClass) {
+    public Characters advClass(AdvClasses advClass) {
         this.setAdvClass(advClass);
         return this;
     }
 
-    public void setAdvClass(String advClass) {
+    public void setAdvClass(AdvClasses advClass) {
         this.advClass = advClass;
     }
 
@@ -98,34 +95,16 @@ public class Characters implements Serializable {
         this.server = server;
     }
 
-    public Set<Equipment> getEquipment() {
-        return this.equipment;
+    public User getUser() {
+        return this.user;
     }
 
-    public void setEquipment(Set<Equipment> equipment) {
-        if (this.equipment != null) {
-            this.equipment.forEach(i -> i.setCharacters(null));
-        }
-        if (equipment != null) {
-            equipment.forEach(i -> i.setCharacters(this));
-        }
-        this.equipment = equipment;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Characters equipment(Set<Equipment> equipment) {
-        this.setEquipment(equipment);
-        return this;
-    }
-
-    public Characters addEquipment(Equipment equipment) {
-        this.equipment.add(equipment);
-        equipment.setCharacters(this);
-        return this;
-    }
-
-    public Characters removeEquipment(Equipment equipment) {
-        this.equipment.remove(equipment);
-        equipment.setCharacters(null);
+    public Characters user(User user) {
+        this.setUser(user);
         return this;
     }
 

@@ -2,6 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -10,14 +11,21 @@ import com.mycompany.myapp.domain.Equipment;
 import com.mycompany.myapp.domain.enumeration.EquipType;
 import com.mycompany.myapp.domain.enumeration.TierEnum;
 import com.mycompany.myapp.repository.EquipmentRepository;
+import com.mycompany.myapp.service.EquipmentService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link EquipmentResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class EquipmentResourceIT {
@@ -34,8 +43,8 @@ class EquipmentResourceIT {
     private static final TierEnum DEFAULT_TIER = TierEnum.Tier1;
     private static final TierEnum UPDATED_TIER = TierEnum.Tier2;
 
-    private static final Integer DEFAULT_HONING_LEVEL = 1;
-    private static final Integer UPDATED_HONING_LEVEL = 2;
+    private static final Integer DEFAULT_HONING_LEVEL = 0;
+    private static final Integer UPDATED_HONING_LEVEL = 1;
 
     private static final EquipType DEFAULT_EQUIPMENT_TYPE = EquipType.Armor;
     private static final EquipType UPDATED_EQUIPMENT_TYPE = EquipType.Weapon;
@@ -48,6 +57,12 @@ class EquipmentResourceIT {
 
     @Autowired
     private EquipmentRepository equipmentRepository;
+
+    @Mock
+    private EquipmentRepository equipmentRepositoryMock;
+
+    @Mock
+    private EquipmentService equipmentServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -186,6 +201,24 @@ class EquipmentResourceIT {
             .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER.toString())))
             .andExpect(jsonPath("$.[*].honingLevel").value(hasItem(DEFAULT_HONING_LEVEL)))
             .andExpect(jsonPath("$.[*].equipmentType").value(hasItem(DEFAULT_EQUIPMENT_TYPE.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllEquipmentWithEagerRelationshipsIsEnabled() throws Exception {
+        when(equipmentServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restEquipmentMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(equipmentServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllEquipmentWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(equipmentServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restEquipmentMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(equipmentServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

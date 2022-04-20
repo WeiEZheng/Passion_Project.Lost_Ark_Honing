@@ -49,6 +49,7 @@ export const Characters = (props: RouteComponentProps<{ url: string }>) => {
                 <th>Name</th>
                 <th>Adv Class</th>
                 <th>Server</th>
+                <th>User</th>
                 <th />
               </tr>
             </thead>
@@ -63,6 +64,7 @@ export const Characters = (props: RouteComponentProps<{ url: string }>) => {
                   <td>{characters.name}</td>
                   <td>{characters.advClass}</td>
                   <td>{characters.server}</td>
+                  <td>{characters.user ? characters.user.login : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/characters/${characters.id}`} color="info" size="sm" data-cy="entityDetailsButton">

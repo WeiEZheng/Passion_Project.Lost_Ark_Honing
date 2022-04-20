@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,14 +65,18 @@ public class CharactersServiceImpl implements CharactersService {
     @Transactional(readOnly = true)
     public List<Characters> findAll() {
         log.debug("Request to get all Characters");
-        return charactersRepository.findAll();
+        return charactersRepository.findAllWithEagerRelationships();
+    }
+
+    public Page<Characters> findAllWithEagerRelationships(Pageable pageable) {
+        return charactersRepository.findAllWithEagerRelationships(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<Characters> findOne(Long id) {
         log.debug("Request to get Characters : {}", id);
-        return charactersRepository.findById(id);
+        return charactersRepository.findOneWithEagerRelationships(id);
     }
 
     @Override

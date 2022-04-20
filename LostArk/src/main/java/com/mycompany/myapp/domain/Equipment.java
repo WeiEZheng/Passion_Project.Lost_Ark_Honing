@@ -31,6 +31,8 @@ public class Equipment implements Serializable {
     private TierEnum tier;
 
     @NotNull
+    @Min(value = 0)
+    @Max(value = 20)
     @Column(name = "honing_level", nullable = false)
     private Integer honingLevel;
 
@@ -40,7 +42,7 @@ public class Equipment implements Serializable {
     private EquipType equipmentType;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "equipment" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private Characters characters;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

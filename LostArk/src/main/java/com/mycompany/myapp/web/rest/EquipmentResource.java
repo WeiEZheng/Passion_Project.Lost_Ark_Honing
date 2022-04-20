@@ -135,10 +135,11 @@ public class EquipmentResource {
     /**
      * {@code GET  /equipment} : get all the equipment.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of equipment in body.
      */
     @GetMapping("/equipment")
-    public List<Equipment> getAllEquipment() {
+    public List<Equipment> getAllEquipment(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Equipment");
         return equipmentService.findAll();
     }

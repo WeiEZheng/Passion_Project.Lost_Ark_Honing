@@ -14,7 +14,9 @@
     {
       "fieldName": "honingLevel",
       "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "20",
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "equipmentType",
@@ -30,6 +32,7 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "characters",
       "otherEntityRelationshipName": "equipment",
       "relationshipName": "characters",

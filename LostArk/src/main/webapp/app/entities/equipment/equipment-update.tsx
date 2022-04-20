@@ -102,6 +102,8 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 type="text"
                 validate={{
                   required: { value: true, message: 'This field is required.' },
+                  min: { value: 0, message: 'This field should be at least 0.' },
+                  max: { value: 20, message: 'This field cannot be more than 20.' },
                   validate: v => isNumber(v) || 'This field should be a number.',
                 }}
               />
@@ -123,7 +125,7 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 {characters
                   ? characters.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}

@@ -1,12 +1,13 @@
-import { IEquipment } from 'app/shared/model/equipment.model';
+import { IUser } from 'app/shared/model/user.model';
+import { AdvClasses } from 'app/shared/model/enumerations/adv-classes.model';
 import { Server } from 'app/shared/model/enumerations/server.model';
 
 export interface ICharacters {
   id?: number;
   name?: string;
-  advClass?: string;
+  advClass?: AdvClasses;
   server?: Server;
-  equipment?: IEquipment[] | null;
+  user?: IUser | null;
 }
 
 export const defaultValue: Readonly<ICharacters> = {};

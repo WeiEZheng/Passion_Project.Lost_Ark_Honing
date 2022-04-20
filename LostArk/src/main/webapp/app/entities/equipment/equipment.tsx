@@ -65,7 +65,7 @@ export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
                   <td>{equipment.honingLevel}</td>
                   <td>{equipment.equipmentType}</td>
                   <td>
-                    {equipment.characters ? <Link to={`/characters/${equipment.characters.id}`}>{equipment.characters.id}</Link> : ''}
+                    {equipment.characters ? <Link to={`/characters/${equipment.characters.id}`}>{equipment.characters.name}</Link> : ''}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

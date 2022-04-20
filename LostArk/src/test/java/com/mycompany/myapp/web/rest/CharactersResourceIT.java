@@ -2,21 +2,30 @@ package com.mycompany.myapp.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Characters;
+import com.mycompany.myapp.domain.enumeration.AdvClasses;
 import com.mycompany.myapp.domain.enumeration.Server;
 import com.mycompany.myapp.repository.CharactersRepository;
+import com.mycompany.myapp.service.CharactersService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link CharactersResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class CharactersResourceIT {
@@ -33,8 +43,8 @@ class CharactersResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_ADV_CLASS = "AAAAAAAAAA";
-    private static final String UPDATED_ADV_CLASS = "BBBBBBBBBB";
+    private static final AdvClasses DEFAULT_ADV_CLASS = AdvClasses.Artillerist;
+    private static final AdvClasses UPDATED_ADV_CLASS = AdvClasses.Bard;
 
     private static final Server DEFAULT_SERVER = Server.Azena;
     private static final Server UPDATED_SERVER = Server.Avesta;
@@ -47,6 +57,12 @@ class CharactersResourceIT {
 
     @Autowired
     private CharactersRepository charactersRepository;
+
+    @Mock
+    private CharactersRepository charactersRepositoryMock;
+
+    @Mock
+    private CharactersService charactersServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -183,8 +199,26 @@ class CharactersResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(characters.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].advClass").value(hasItem(DEFAULT_ADV_CLASS)))
+            .andExpect(jsonPath("$.[*].advClass").value(hasItem(DEFAULT_ADV_CLASS.toString())))
             .andExpect(jsonPath("$.[*].server").value(hasItem(DEFAULT_SERVER.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCharactersWithEagerRelationshipsIsEnabled() throws Exception {
+        when(charactersServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCharactersMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(charactersServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCharactersWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(charactersServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCharactersMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(charactersServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -200,7 +234,7 @@ class CharactersResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(characters.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.advClass").value(DEFAULT_ADV_CLASS))
+            .andExpect(jsonPath("$.advClass").value(DEFAULT_ADV_CLASS.toString()))
             .andExpect(jsonPath("$.server").value(DEFAULT_SERVER.toString()));
     }
 

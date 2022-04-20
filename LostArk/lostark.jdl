@@ -10,14 +10,22 @@ entity MarketPrice {
 
 entity Characters{
 	Name String required 
-    AdvClass String required
+    AdvClass AdvClasses required
     Server Server required
 }
 
 entity Equipment{
 	Tier TierEnum required
-    HoningLevel Integer required
+    HoningLevel Integer required min (0) max (20)
     EquipmentType EquipType required
+}
+
+enum AdvClasses{
+Artillerist, Bard, Berserker,
+Deathblade, Deadeye, Gunlancer,
+Gunslinger, Paladin,
+Scrapper, Shadowhunter,
+Sharpshooter, Sorceress, Soulfist, Striker, Wardancer
 }
 
 enum EquipType {
@@ -55,10 +63,10 @@ enum Server {
 	Azena, Avesta, Ladon, Una, Galatur, Kharmine, Regulus, Karta, Elzowin, Sasha, Adrinne, Aldebaran, Zosma, Vykas, Danube
 }
 
-relationship OneToMany {
-	Characters{Equipment} to Equipment{Characters}
+relationship ManyToOne{
+	Characters{user(login)} to User
+    Equipment{Characters(Name)} to Characters
 }
-
 relationship OneToOne {
 	MarketPrice{Item} to Item
 }
