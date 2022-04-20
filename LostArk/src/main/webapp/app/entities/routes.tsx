@@ -2,6 +2,9 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
+import MarketPrice from './market-price';
+import Charac from './charac';
+import Equipment from './equipment';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default ({ match }) => {
@@ -9,6 +12,9 @@ export default ({ match }) => {
     <div>
       <Switch>
         {/* prettier-ignore */}
+        <ErrorBoundaryRoute path={`${match.url}market-price`} component={MarketPrice} />
+        <ErrorBoundaryRoute path={`${match.url}charac`} component={Charac} />
+        <ErrorBoundaryRoute path={`${match.url}equipment`} component={Equipment} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </Switch>
     </div>

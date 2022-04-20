@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20220420000814",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "equipment",
+  "fields": [
+    {
+      "fieldName": "characterID",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tier",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "honingLevel",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "equipmentType",
+      "fieldType": "EquipType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Armor,Weapon"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Equipment",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "charac",
+      "otherEntityRelationshipName": "equipment",
+      "relationshipName": "charac",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

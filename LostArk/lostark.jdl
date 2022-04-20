@@ -1,0 +1,34 @@
+
+entity MarketPrice {
+	ItemName String required
+    ItemPricePerStack Integer required
+    NumberPerStack Integer required
+    TimeUpdated Instant required
+}
+
+entity Charac{
+	Name String required
+    AdvClass String required
+    Server Server required
+}
+
+entity Equipment{
+	CharacterID Integer required
+	Tier Integer required
+    HoningLevel Integer required
+    EquipmentType EquipType required
+}
+
+enum EquipType {
+	Armor, Weapon
+}
+
+enum Server {
+	Azena, Avesta, Ladon, Una, Galatur, Kharmine, Regulus, Karta, Elzowin, Sasha, Adrinne, Aldebaran, Zosma, Vykas, Danube
+}
+
+relationship OneToMany {
+	Charac{Equipment} to Equipment {Charac}
+}
+
+service all with serviceImpl
