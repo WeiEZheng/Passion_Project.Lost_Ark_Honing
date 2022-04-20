@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20220420003909",
+  "changelogDate": "20220420145140",
   "dto": "no",
   "embedded": false,
   "entityTableName": "characters",
@@ -14,7 +14,7 @@
       "fieldName": "advClass",
       "fieldType": "AdvClasses",
       "fieldValidateRules": ["required"],
-      "fieldValues": "Artillerist,Bard,Berserker,Deathblade,Deadeye,Gunlancer,Gunslinger,Paladin,Scrapper,Shadowhunter,Sharpshooter,Sorceress,Soulfist,Striker,Wardancer"
+      "fieldValues": "Artillerist,Bard,Berserker,Deadeye,Deathblade,Gunlancer,Gunslinger,Paladin,Scrapper,Shadowhunter,Sharpshooter,Sorceress,Soulfist,Striker,Wardancer"
     },
     {
       "fieldName": "server",

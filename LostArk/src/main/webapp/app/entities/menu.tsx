@@ -6,6 +6,9 @@ const EntitiesMenu = () => {
   return (
     <>
       {/* prettier-ignore */}
+      <MenuItem icon="asterisk" to="/item">
+        Item
+      </MenuItem>
       <MenuItem icon="asterisk" to="/market-price">
         Market Price
       </MenuItem>
@@ -14,9 +17,6 @@ const EntitiesMenu = () => {
       </MenuItem>
       <MenuItem icon="asterisk" to="/equipment">
         Equipment
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/item">
-        Item
       </MenuItem>
       {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
     </>

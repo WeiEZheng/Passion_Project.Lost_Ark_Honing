@@ -46,7 +46,7 @@ spring:
     database-platform: tech.jhipster.domain.util.FixedH2Dialect
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev
+    contexts: dev, faker
   mail:
     host: localhost
     port: 25
@@ -100,7 +100,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: NTk5NWFlMmFiNTI0NTA0Yzk0YWU2N2I5ZTA4NGZhYzhkMjg0MWZkM2E1MWM5ODE0NzBhMWNjNGRmNGI5ZGNlN2EzNWM1ZDliZDlkYjk3MDk5ZjBkOTY0MjBkODVmNWY2ZTg1OGFjNjMwOWNjZThkM2RmMTBmYTYzZjBhODgxNzk=
+        base64-secret: MTMxNmRiZmZkYzFhMWZiZWFiODFjMzI0M2UyNWMyMGIyNjhjOTY0N2Y0YmVkNTg3ODc5MGY0M2IxODYxNDZlMjhmMjEwNTMxNDJlMDExZDU0OTI1ZWUyNWE0Y2QxMzk4YTNkODU3OWEyODJiMGU1OTM2Mzc2MzUzOWYxY2RlN2Q=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

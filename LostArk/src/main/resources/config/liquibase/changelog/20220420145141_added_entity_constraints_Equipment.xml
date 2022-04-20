@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Equipment.
     -->
-    <changeSet id="20220420003910-2" author="jhipster">
+    <changeSet id="20220420145141-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="characters_id"
                                  baseTableName="equipment"

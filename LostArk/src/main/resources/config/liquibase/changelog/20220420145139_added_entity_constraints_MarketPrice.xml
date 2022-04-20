@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity MarketPrice.
     -->
-    <changeSet id="20220420003908-2" author="jhipster">
+    <changeSet id="20220420145139-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="item_id"
                                  baseTableName="market_price"

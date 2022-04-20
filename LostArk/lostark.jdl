@@ -21,8 +21,8 @@ entity Equipment{
 }
 
 enum AdvClasses{
-Artillerist, Bard, Berserker,
-Deathblade, Deadeye, Gunlancer,
+Artillerist, Bard, Berserker, Deadeye, 
+Deathblade, Gunlancer,
 Gunslinger, Paladin,
 Scrapper, Shadowhunter,
 Sharpshooter, Sorceress, Soulfist, Striker, Wardancer

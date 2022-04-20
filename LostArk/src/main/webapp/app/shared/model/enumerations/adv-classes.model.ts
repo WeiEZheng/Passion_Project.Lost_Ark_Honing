@@ -5,9 +5,9 @@ export enum AdvClasses {
 
   Berserker = 'Berserker',
 
-  Deathblade = 'Deathblade',
-
   Deadeye = 'Deadeye',
+
+  Deathblade = 'Deathblade',
 
   Gunlancer = 'Gunlancer',
 
