@@ -3,10 +3,15 @@ package lostark.lostarkcalc.service.impl;
 import java.util.List;
 import java.util.Optional;
 import lostark.lostarkcalc.domain.Characters;
+import lostark.lostarkcalc.domain.User;
 import lostark.lostarkcalc.repository.CharactersRepository;
+import lostark.lostarkcalc.repository.UserRepository;
+import lostark.lostarkcalc.security.SecurityUtils;
 import lostark.lostarkcalc.service.CharactersService;
+import lostark.lostarkcalc.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +28,9 @@ public class CharactersServiceImpl implements CharactersService {
 
     private final CharactersRepository charactersRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public CharactersServiceImpl(CharactersRepository charactersRepository) {
         this.charactersRepository = charactersRepository;
     }
@@ -30,6 +38,7 @@ public class CharactersServiceImpl implements CharactersService {
     @Override
     public Characters save(Characters characters) {
         log.debug("Request to save Characters : {}", characters);
+        characters.setBelongTo(SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).get());
         return charactersRepository.save(characters);
     }
 
@@ -55,7 +64,6 @@ public class CharactersServiceImpl implements CharactersService {
                 if (characters.getServer() != null) {
                     existingCharacters.setServer(characters.getServer());
                 }
-
                 return existingCharacters;
             })
             .map(charactersRepository::save);
