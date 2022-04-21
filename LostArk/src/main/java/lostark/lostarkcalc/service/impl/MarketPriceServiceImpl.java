@@ -36,8 +36,7 @@ public class MarketPriceServiceImpl implements MarketPriceService {
     @Override
     public MarketPrice update(MarketPrice marketPrice) {
         log.debug("Request to save MarketPrice : {}", marketPrice);
-        marketPrice.setTimeUpdated(Instant.now());
-        return marketPriceRepository.save(marketPrice);
+        return this.save(marketPrice);
     }
 
     @Override
@@ -53,10 +52,9 @@ public class MarketPriceServiceImpl implements MarketPriceService {
                 if (marketPrice.getNumberPerStack() != null) {
                     existingMarketPrice.setNumberPerStack(marketPrice.getNumberPerStack());
                 }
-                existingMarketPrice.setTimeUpdated(Instant.now());
                 return existingMarketPrice;
             })
-            .map(marketPriceRepository::save);
+            .map(this::save);
     }
 
     @Override

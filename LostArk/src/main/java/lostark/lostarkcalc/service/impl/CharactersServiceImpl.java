@@ -45,7 +45,7 @@ public class CharactersServiceImpl implements CharactersService {
     @Override
     public Characters update(Characters characters) {
         log.debug("Request to save Characters : {}", characters);
-        return charactersRepository.save(characters);
+        return this.save(characters);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class CharactersServiceImpl implements CharactersService {
                 }
                 return existingCharacters;
             })
-            .map(charactersRepository::save);
+            .map(this::save);
     }
 
     @Override
