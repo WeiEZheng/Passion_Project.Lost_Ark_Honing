@@ -3,7 +3,10 @@ package lostark.lostarkcalc.service.impl;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+
+import lostark.lostarkcalc.domain.Item;
 import lostark.lostarkcalc.domain.MarketPrice;
+import lostark.lostarkcalc.domain.enumeration.MaterialName;
 import lostark.lostarkcalc.repository.MarketPriceRepository;
 import lostark.lostarkcalc.service.MarketPriceService;
 import org.slf4j.Logger;
@@ -75,5 +78,10 @@ public class MarketPriceServiceImpl implements MarketPriceService {
     public void delete(Long id) {
         log.debug("Request to delete MarketPrice : {}", id);
         marketPriceRepository.deleteById(id);
+    }
+
+    public Optional<MarketPrice> findOneByItem(Item item) {
+        log.debug("Request to get MarketPrice : {}", item);
+        return marketPriceRepository.findOneByItem(item);
     }
 }

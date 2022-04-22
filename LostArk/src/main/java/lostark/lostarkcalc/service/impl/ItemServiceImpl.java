@@ -3,6 +3,7 @@ package lostark.lostarkcalc.service.impl;
 import java.util.List;
 import java.util.Optional;
 import lostark.lostarkcalc.domain.Item;
+import lostark.lostarkcalc.domain.enumeration.MaterialName;
 import lostark.lostarkcalc.repository.ItemRepository;
 import lostark.lostarkcalc.service.ItemService;
 import org.slf4j.Logger;
@@ -71,5 +72,10 @@ public class ItemServiceImpl implements ItemService {
     public void delete(Long id) {
         log.debug("Request to delete Item : {}", id);
         itemRepository.deleteById(id);
+    }
+
+    public Optional<Item> findOneByName(MaterialName materialName) {
+        log.debug("Request to get Item : {}", materialName.getValue());
+        return itemRepository.findOneByName(materialName);
     }
 }
