@@ -8,10 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IItem } from 'app/shared/model/item.model';
-import { getEntities as getItems } from 'app/entities/item/item.reducer';
-import { MaterialName } from 'app/shared/model/enumerations/material-name.model';
 import { IMarketPrice } from 'app/shared/model/market-price.model';
+import { MaterialName } from 'app/shared/model/enumerations/material-name.model';
 import { getEntity, updateEntity, createEntity, reset } from './market-price.reducer';
 
 export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) => {
@@ -19,11 +17,11 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const items = useAppSelector(state => state.item.entities);
   const marketPriceEntity = useAppSelector(state => state.marketPrice.entity);
   const loading = useAppSelector(state => state.marketPrice.loading);
   const updating = useAppSelector(state => state.marketPrice.updating);
   const updateSuccess = useAppSelector(state => state.marketPrice.updateSuccess);
+  const materialNameValues = Object.keys(MaterialName);
   const handleClose = () => {
     props.history.push('/market-price');
   };
@@ -34,8 +32,6 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
     } else {
       dispatch(getEntity(props.match.params.id));
     }
-
-    dispatch(getItems({}));
   }, []);
 
   useEffect(() => {
@@ -50,7 +46,6 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
     const entity = {
       ...marketPriceEntity,
       ...values,
-      item: items.find(it => it.id.toString() === values.item.toString()),
     };
 
     if (isNew) {
@@ -66,9 +61,9 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
           timeUpdated: displayDefaultDateTime(),
         }
       : {
+          itemName: 'DestructionStoneFragment',
           ...marketPriceEntity,
           timeUpdated: convertDateTimeFromServer(marketPriceEntity.timeUpdated),
-          item: marketPriceEntity?.item?.id,
         };
 
   return (
@@ -86,17 +81,7 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              <ValidatedField id="market-price-item" name="item" data-cy="item" label="Item" type="select"
-              validate={{required: { value: true, message: 'This field is required.'}}}>
-                <option value="" key="0" />
-                {items
-                  ? items.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {MaterialName[otherEntity.itemName]}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
+              {!isNew ? <ValidatedField name="id" required readOnly id="market-price-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField
                 label="Item Price Per Stack"
                 id="market-price-itemPricePerStack"
@@ -119,6 +104,24 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
                   validate: v => isNumber(v) || 'This field should be a number.',
                 }}
               />
+              <ValidatedField
+                label="Time Updated"
+                id="market-price-timeUpdated"
+                name="timeUpdated"
+                data-cy="timeUpdated"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: 'This field is required.' },
+                }}
+              />
+              <ValidatedField label="Item Name" id="market-price-itemName" name="itemName" data-cy="itemName" type="select">
+                {materialNameValues.map(materialName => (
+                  <option value={materialName} key={materialName}>
+                    {materialName}
+                  </option>
+                ))}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/market-price" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

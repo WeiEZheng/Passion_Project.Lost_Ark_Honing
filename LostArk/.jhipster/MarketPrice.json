@@ -19,6 +19,12 @@
       "fieldName": "timeUpdated",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "itemName",
+      "fieldType": "MaterialName",
+      "fieldValidateRules": ["required", "unique"],
+      "fieldValues": "DestructionStoneFragment (Destruction Stone Fragment),GuardianStoneFragment (Guardian Stone Fragment),HarmonyShard (Harmony Shard),HarmonyLeapstone (Harmony Leapstone),StarsBreaths (Star's Breaths),DestructionStone (Destruction Stone),GuardianStone (Guardian Stone),LifeShard (Life Shard),LifeLeapstone (Life Leapstone),CaldarrFusionMaterial (Caldarr Fusion Material),MoonsBreaths (Moon's Breaths),DestructionStoneCrystal (Destruction Stone Crystal),GuardianStoneCrystal (Guardian Stone Crystal),HonorShard (Honor Shard),HonorLeapstone (Honor Leapstone),SimpleOrehaFusionMaterial (Simple Oreha Fusion Material),GreatHonorLeapstone (Great Honor Leapstone),BasicOrehaFusionMaterial (Basic Oreha Fusion Material),SolarGrace (Solar Grace),SolarBlessing (Solar Blessing),SolarProtection (Solar Protection)"
     }
   ],
   "fluentMethods": true,
@@ -26,14 +32,6 @@
   "name": "MarketPrice",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityName": "item",
-      "otherEntityRelationshipName": "marketPrice",
-      "ownerSide": true,
-      "relationshipName": "item",
-      "relationshipType": "one-to-one"
-    }
-  ],
+  "relationships": [],
   "service": "serviceImpl"
 }

@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import lostark.lostarkcalc.IntegrationTest;
 import lostark.lostarkcalc.domain.MarketPrice;
+import lostark.lostarkcalc.domain.enumeration.MaterialName;
 import lostark.lostarkcalc.repository.MarketPriceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,9 @@ class MarketPriceResourceIT {
 
     private static final Instant DEFAULT_TIME_UPDATED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_TIME_UPDATED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final MaterialName DEFAULT_ITEM_NAME = MaterialName.DestructionStoneFragment;
+    private static final MaterialName UPDATED_ITEM_NAME = MaterialName.GuardianStoneFragment;
 
     private static final String ENTITY_API_URL = "/api/market-prices";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -67,7 +71,8 @@ class MarketPriceResourceIT {
         MarketPrice marketPrice = new MarketPrice()
             .itemPricePerStack(DEFAULT_ITEM_PRICE_PER_STACK)
             .numberPerStack(DEFAULT_NUMBER_PER_STACK)
-            .timeUpdated(DEFAULT_TIME_UPDATED);
+            .timeUpdated(DEFAULT_TIME_UPDATED)
+            .itemName(DEFAULT_ITEM_NAME);
         return marketPrice;
     }
 
@@ -81,7 +86,8 @@ class MarketPriceResourceIT {
         MarketPrice marketPrice = new MarketPrice()
             .itemPricePerStack(UPDATED_ITEM_PRICE_PER_STACK)
             .numberPerStack(UPDATED_NUMBER_PER_STACK)
-            .timeUpdated(UPDATED_TIME_UPDATED);
+            .timeUpdated(UPDATED_TIME_UPDATED)
+            .itemName(UPDATED_ITEM_NAME);
         return marketPrice;
     }
 
@@ -106,6 +112,7 @@ class MarketPriceResourceIT {
         assertThat(testMarketPrice.getItemPricePerStack()).isEqualTo(DEFAULT_ITEM_PRICE_PER_STACK);
         assertThat(testMarketPrice.getNumberPerStack()).isEqualTo(DEFAULT_NUMBER_PER_STACK);
         assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(DEFAULT_TIME_UPDATED);
+        assertThat(testMarketPrice.getItemName()).isEqualTo(DEFAULT_ITEM_NAME);
     }
 
     @Test
@@ -179,6 +186,23 @@ class MarketPriceResourceIT {
 
     @Test
     @Transactional
+    void checkItemNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = marketPriceRepository.findAll().size();
+        // set the field null
+        marketPrice.setItemName(null);
+
+        // Create the MarketPrice, which fails.
+
+        restMarketPriceMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(marketPrice)))
+            .andExpect(status().isBadRequest());
+
+        List<MarketPrice> marketPriceList = marketPriceRepository.findAll();
+        assertThat(marketPriceList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllMarketPrices() throws Exception {
         // Initialize the database
         marketPriceRepository.saveAndFlush(marketPrice);
@@ -191,7 +215,8 @@ class MarketPriceResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(marketPrice.getId().intValue())))
             .andExpect(jsonPath("$.[*].itemPricePerStack").value(hasItem(DEFAULT_ITEM_PRICE_PER_STACK)))
             .andExpect(jsonPath("$.[*].numberPerStack").value(hasItem(DEFAULT_NUMBER_PER_STACK)))
-            .andExpect(jsonPath("$.[*].timeUpdated").value(hasItem(DEFAULT_TIME_UPDATED.toString())));
+            .andExpect(jsonPath("$.[*].timeUpdated").value(hasItem(DEFAULT_TIME_UPDATED.toString())))
+            .andExpect(jsonPath("$.[*].itemName").value(hasItem(DEFAULT_ITEM_NAME.toString())));
     }
 
     @Test
@@ -208,7 +233,8 @@ class MarketPriceResourceIT {
             .andExpect(jsonPath("$.id").value(marketPrice.getId().intValue()))
             .andExpect(jsonPath("$.itemPricePerStack").value(DEFAULT_ITEM_PRICE_PER_STACK))
             .andExpect(jsonPath("$.numberPerStack").value(DEFAULT_NUMBER_PER_STACK))
-            .andExpect(jsonPath("$.timeUpdated").value(DEFAULT_TIME_UPDATED.toString()));
+            .andExpect(jsonPath("$.timeUpdated").value(DEFAULT_TIME_UPDATED.toString()))
+            .andExpect(jsonPath("$.itemName").value(DEFAULT_ITEM_NAME.toString()));
     }
 
     @Test
@@ -233,7 +259,8 @@ class MarketPriceResourceIT {
         updatedMarketPrice
             .itemPricePerStack(UPDATED_ITEM_PRICE_PER_STACK)
             .numberPerStack(UPDATED_NUMBER_PER_STACK)
-            .timeUpdated(UPDATED_TIME_UPDATED);
+            .timeUpdated(UPDATED_TIME_UPDATED)
+            .itemName(UPDATED_ITEM_NAME);
 
         restMarketPriceMockMvc
             .perform(
@@ -250,6 +277,7 @@ class MarketPriceResourceIT {
         assertThat(testMarketPrice.getItemPricePerStack()).isEqualTo(UPDATED_ITEM_PRICE_PER_STACK);
         assertThat(testMarketPrice.getNumberPerStack()).isEqualTo(UPDATED_NUMBER_PER_STACK);
         assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(UPDATED_TIME_UPDATED);
+        assertThat(testMarketPrice.getItemName()).isEqualTo(UPDATED_ITEM_NAME);
     }
 
     @Test
@@ -320,6 +348,8 @@ class MarketPriceResourceIT {
         MarketPrice partialUpdatedMarketPrice = new MarketPrice();
         partialUpdatedMarketPrice.setId(marketPrice.getId());
 
+        partialUpdatedMarketPrice.itemName(UPDATED_ITEM_NAME);
+
         restMarketPriceMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedMarketPrice.getId())
@@ -335,6 +365,7 @@ class MarketPriceResourceIT {
         assertThat(testMarketPrice.getItemPricePerStack()).isEqualTo(DEFAULT_ITEM_PRICE_PER_STACK);
         assertThat(testMarketPrice.getNumberPerStack()).isEqualTo(DEFAULT_NUMBER_PER_STACK);
         assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(DEFAULT_TIME_UPDATED);
+        assertThat(testMarketPrice.getItemName()).isEqualTo(UPDATED_ITEM_NAME);
     }
 
     @Test
@@ -352,7 +383,8 @@ class MarketPriceResourceIT {
         partialUpdatedMarketPrice
             .itemPricePerStack(UPDATED_ITEM_PRICE_PER_STACK)
             .numberPerStack(UPDATED_NUMBER_PER_STACK)
-            .timeUpdated(UPDATED_TIME_UPDATED);
+            .timeUpdated(UPDATED_TIME_UPDATED)
+            .itemName(UPDATED_ITEM_NAME);
 
         restMarketPriceMockMvc
             .perform(
@@ -369,6 +401,7 @@ class MarketPriceResourceIT {
         assertThat(testMarketPrice.getItemPricePerStack()).isEqualTo(UPDATED_ITEM_PRICE_PER_STACK);
         assertThat(testMarketPrice.getNumberPerStack()).isEqualTo(UPDATED_NUMBER_PER_STACK);
         assertThat(testMarketPrice.getTimeUpdated()).isEqualTo(UPDATED_TIME_UPDATED);
+        assertThat(testMarketPrice.getItemName()).isEqualTo(UPDATED_ITEM_NAME);
     }
 
     @Test

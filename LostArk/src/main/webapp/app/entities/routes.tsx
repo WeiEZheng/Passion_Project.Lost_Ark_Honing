@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
-import Item from './item';
 import MarketPrice from './market-price';
 import Characters from './characters';
 import Equipment from './equipment';
@@ -13,7 +12,6 @@ export default ({ match }) => {
     <div>
       <Switch>
         {/* prettier-ignore */}
-        <ErrorBoundaryRoute path={`${match.url}item`} component={Item} />
         <ErrorBoundaryRoute path={`${match.url}market-price`} component={MarketPrice} />
         <ErrorBoundaryRoute path={`${match.url}characters`} component={Characters} />
         <ErrorBoundaryRoute path={`${match.url}equipment`} component={Equipment} />

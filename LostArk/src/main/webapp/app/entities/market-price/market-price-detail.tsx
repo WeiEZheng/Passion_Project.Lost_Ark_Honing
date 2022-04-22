@@ -42,8 +42,10 @@ export const MarketPriceDetail = (props: RouteComponentProps<{ id: string }>) =>
               <TextFormat value={marketPriceEntity.timeUpdated} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
-          <dt>Item</dt>
-          <dd>{marketPriceEntity.item ? marketPriceEntity.item.id : ''}</dd>
+          <dt>
+            <span id="itemName">Item Name</span>
+          </dt>
+          <dd>{marketPriceEntity.itemName}</dd>
         </dl>
         <Button tag={Link} to="/market-price" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

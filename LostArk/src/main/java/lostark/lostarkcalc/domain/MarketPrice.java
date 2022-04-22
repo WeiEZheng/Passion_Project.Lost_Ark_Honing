@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-
-import org.checkerframework.common.aliasing.qual.Unique;
+import lostark.lostarkcalc.domain.enumeration.MaterialName;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -33,14 +32,14 @@ public class MarketPrice implements Serializable {
     @Column(name = "number_per_stack", nullable = false)
     private Integer numberPerStack;
 
+    @NotNull
     @Column(name = "time_updated", nullable = false)
     private Instant timeUpdated;
 
     @NotNull
-    @OneToOne
-    @Unique
-    @JoinColumn(unique = true)
-    private Item item;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "item_name", nullable = false, unique = true)
+    private MaterialName itemName;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -96,17 +95,17 @@ public class MarketPrice implements Serializable {
         this.timeUpdated = timeUpdated;
     }
 
-    public Item getItem() {
-        return this.item;
+    public MaterialName getItemName() {
+        return this.itemName;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public MarketPrice item(Item item) {
-        this.setItem(item);
+    public MarketPrice itemName(MaterialName itemName) {
+        this.setItemName(itemName);
         return this;
+    }
+
+    public void setItemName(MaterialName itemName) {
+        this.itemName = itemName;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -136,6 +135,7 @@ public class MarketPrice implements Serializable {
             ", itemPricePerStack=" + getItemPricePerStack() +
             ", numberPerStack=" + getNumberPerStack() +
             ", timeUpdated='" + getTimeUpdated() + "'" +
+            ", itemName='" + getItemName() + "'" +
             "}";
     }
 }

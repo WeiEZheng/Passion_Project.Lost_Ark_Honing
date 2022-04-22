@@ -23,9 +23,6 @@
             <column name="equipment_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="belong_to_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="characters_id" type="bigint">
                 <constraints nullable="true" />
             </column>

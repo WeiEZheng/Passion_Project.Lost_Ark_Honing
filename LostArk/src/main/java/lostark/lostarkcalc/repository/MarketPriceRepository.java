@@ -1,7 +1,7 @@
 package lostark.lostarkcalc.repository;
 
-import lostark.lostarkcalc.domain.Item;
 import lostark.lostarkcalc.domain.MarketPrice;
+import lostark.lostarkcalc.domain.enumeration.MaterialName;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +13,5 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface MarketPriceRepository extends JpaRepository<MarketPrice, Long> {
-    Optional<MarketPrice> findOneByItem(Item item);
+    Optional<MarketPrice> findOneByMaterialName(MaterialName materialName);
 }

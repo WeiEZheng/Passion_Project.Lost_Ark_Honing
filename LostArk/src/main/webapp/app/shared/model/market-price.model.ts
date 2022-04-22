@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
-import { IItem } from 'app/shared/model/item.model';
+import { MaterialName } from 'app/shared/model/enumerations/material-name.model';
 
 export interface IMarketPrice {
   id?: number;
   itemPricePerStack?: number;
   numberPerStack?: number;
   timeUpdated?: string;
-  item?: IItem | null;
+  itemName?: MaterialName;
 }
 
 export const defaultValue: Readonly<IMarketPrice> = {};

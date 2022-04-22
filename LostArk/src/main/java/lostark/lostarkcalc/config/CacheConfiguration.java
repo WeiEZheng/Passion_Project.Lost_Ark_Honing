@@ -48,7 +48,6 @@ public class CacheConfiguration {
             createCache(cm, lostark.lostarkcalc.domain.User.class.getName());
             createCache(cm, lostark.lostarkcalc.domain.Authority.class.getName());
             createCache(cm, lostark.lostarkcalc.domain.User.class.getName() + ".authorities");
-            createCache(cm, lostark.lostarkcalc.domain.Item.class.getName());
             createCache(cm, lostark.lostarkcalc.domain.MarketPrice.class.getName());
             createCache(cm, lostark.lostarkcalc.domain.Characters.class.getName());
             createCache(cm, lostark.lostarkcalc.domain.Characters.class.getName() + ".equipment");

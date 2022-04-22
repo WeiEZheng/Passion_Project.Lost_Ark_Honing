@@ -49,7 +49,7 @@ export const MarketPrice = (props: RouteComponentProps<{ url: string }>) => {
                 <th>Item Price Per Stack</th>
                 <th>Number Per Stack</th>
                 <th>Time Updated</th>
-                <th>Item</th>
+                <th>Item Name</th>
                 <th />
               </tr>
             </thead>
@@ -66,7 +66,7 @@ export const MarketPrice = (props: RouteComponentProps<{ url: string }>) => {
                   <td>
                     {marketPrice.timeUpdated ? <TextFormat type="date" value={marketPrice.timeUpdated} format={APP_DATE_FORMAT} /> : null}
                   </td>
-                  <td>{marketPrice.item ? <Link to={`/item/${marketPrice.item.id}`}>{marketPrice.item.id}</Link> : ''}</td>
+                  <td>{marketPrice.itemName}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/market-price/${marketPrice.id}`} color="info" size="sm" data-cy="entityDetailsButton">

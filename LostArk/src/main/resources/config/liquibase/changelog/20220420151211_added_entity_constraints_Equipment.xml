@@ -8,12 +8,6 @@
     -->
     <changeSet id="20220420151211-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="belong_to_id"
-                                 baseTableName="equipment"
-                                 constraintName="fk_equipment__belong_to_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
         <addForeignKeyConstraint baseColumnNames="characters_id"
                                  baseTableName="equipment"
                                  constraintName="fk_equipment__characters_id"

@@ -5,9 +5,13 @@ export enum AdvClasses {
 
   Berserker = 'Berserker',
 
+  Deadeye = 'Deadeye',
+
   Deathblade = 'Deathblade',
 
-  Deadeye = 'Deadeye',
+  Destroyer = 'Destroyer',
+
+  Glavier = 'Glavier',
 
   Gunlancer = 'Gunlancer',
 

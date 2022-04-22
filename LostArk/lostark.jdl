@@ -1,11 +1,8 @@
-entity Item {
-	ItemName MaterialName unique
-}
-
 entity MarketPrice {
     ItemPricePerStack Integer required
     NumberPerStack Integer required
     TimeUpdated Instant required
+    ItemName MaterialName required unique
 }
 
 entity Characters{
@@ -21,8 +18,8 @@ entity Equipment{
 }
 
 enum AdvClasses{
-Artillerist, Bard, Berserker,
-Deathblade, Deadeye, Gunlancer,
+Artillerist, Bard, Berserker, Deadeye, 
+Deathblade, Destroyer, Glavier, Gunlancer,
 Gunslinger, Paladin,
 Scrapper, Shadowhunter,
 Sharpshooter, Sorceress, Soulfist, Striker, Wardancer
@@ -35,6 +32,7 @@ enum EquipType {
 enum TierEnum{
 	Tier1 ("Tier 1"), Tier2 ("Tier 2"), Tier3Low ("Tier 3 Low"), Tier3Mid ("Tier 3 Mid"), Tier3High ("Tier 3 High")
 }
+
 enum MaterialName{
 	DestructionStoneFragment ("Destruction Stone Fragment"), 
     GuardianStoneFragment ("Guardian Stone Fragment"), 
@@ -63,15 +61,9 @@ enum Server {
 	Azena, Avesta, Ladon, Una, Galatur, Kharmine, Regulus, Karta, Elzowin, Sasha, Adrinne, Aldebaran, Zosma, Vykas, Danube
 }
 
-relationship OneToMany {
-	Characters{Equipment} to Equipment{Characters},
-}
 relationship ManyToOne{
-	Characters{belongTo(login)} to User
-	Equipment{belongTo(login)} to User
-}
-relationship OneToOne {
-	MarketPrice{Item} to Item
+	Characters{user(login)} to User
+    Equipment{Characters(Name)} to Characters
 }
 
 service all with serviceImpl

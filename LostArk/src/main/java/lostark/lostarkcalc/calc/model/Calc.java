@@ -1,12 +1,10 @@
 package lostark.lostarkcalc.calc.model;
 
 import lostark.lostarkcalc.domain.Equipment;
-import lostark.lostarkcalc.domain.Item;
 import lostark.lostarkcalc.domain.MarketPrice;
 import lostark.lostarkcalc.domain.enumeration.EquipType;
 import lostark.lostarkcalc.domain.enumeration.MaterialName;
 import lostark.lostarkcalc.domain.enumeration.TierEnum;
-import lostark.lostarkcalc.service.impl.ItemServiceImpl;
 import lostark.lostarkcalc.service.impl.MarketPriceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,9 +14,6 @@ public class Calc {
     private static HoningMat honingMat = HoningMat.getInstance();
 
     @Autowired
-    static ItemServiceImpl itemService;
-
-    @Autowired
     static MarketPriceServiceImpl marketPriceService;
 
     public static Integer RegularCost(Equipment equipment){
@@ -26,14 +21,14 @@ public class Calc {
             equipment.getHoningLevel(), false);
         Integer cost=0;
         cost += getCost(mat.get(0),
-            itemService.findOneByName(getStoneName(equipment.getTier(), equipment.getEquipmentType())).get());
+            marketPriceService.findOneByMaterialName(getStoneName(equipment.getTier(), equipment.getEquipmentType())).get());
         cost += getCost(mat.get(1),
-            itemService.findOneByName(getShardName(equipment.getTier())).get());
+            marketPriceService.findOneByMaterialName(getShardName(equipment.getTier())).get());
         cost += getCost(mat.get(2),
-            itemService.findOneByName(getLeapName(equipment.getTier())).get());
+            marketPriceService.findOneByMaterialName(getLeapName(equipment.getTier())).get());
         if (mat.get(4) != 0) {
             cost += getCost(mat.get(4),
-                itemService.findOneByName(getFusionName(equipment.getTier())).get());
+                marketPriceService.findOneByMaterialName(getFusionName(equipment.getTier())).get());
         }
         cost += mat.get(4);
         return cost;
@@ -95,9 +90,7 @@ public class Calc {
             return MaterialName.GuardianStoneCrystal;
     }
 
-    public static Integer getCost(Integer count, Item item){
-        MarketPrice price = marketPriceService.findOneByItem(item).get();
-        Integer cost = ((int) Math.ceil(1.0 * count / price.getNumberPerStack())) * price.getItemPricePerStack();
-        return cost;
+    public static Integer getCost(Integer count, MarketPrice marketPrice){
+        return ((int) Math.ceil(1.0 * count / marketPrice.getNumberPerStack())) * marketPrice.getItemPricePerStack();
     }
 }
