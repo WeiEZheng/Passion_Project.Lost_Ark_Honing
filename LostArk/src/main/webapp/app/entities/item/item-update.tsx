@@ -79,8 +79,8 @@ export const ItemUpdate = (props: RouteComponentProps<{ id: string }>) => {
               {!isNew ? <ValidatedField name="id" required readOnly id="item-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="Item Name" id="item-itemName" name="itemName" data-cy="itemName" type="select">
                 {materialNameValues.map(materialName => (
-                  <option value={materialName} key={materialName}>
-                    {materialName}
+                  <option value={MaterialName[materialName]} key={materialName}>
+                    {MaterialName[materialName]}
                   </option>
                 ))}
               </ValidatedField>

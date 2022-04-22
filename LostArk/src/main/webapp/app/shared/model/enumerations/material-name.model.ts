@@ -7,7 +7,7 @@ export enum MaterialName {
 
   HarmonyLeapstone = 'Harmony Leapstone',
 
-  StarsBreaths = 'Star&#39;s Breaths',
+  StarsBreaths = 'Star\'s Breaths',
 
   DestructionStone = 'Destruction Stone',
 
@@ -19,7 +19,7 @@ export enum MaterialName {
 
   CaldarrFusionMaterial = 'Caldarr Fusion Material',
 
-  MoonsBreaths = 'Moon&#39;s Breaths',
+  MoonsBreaths = 'Moon\'s Breaths',
 
   DestructionStoneCrystal = 'Destruction Stone Crystal',
 

@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IItem } from 'app/shared/model/item.model';
 import { getEntities as getItems } from 'app/entities/item/item.reducer';
+import { MaterialName } from 'app/shared/model/enumerations/material-name.model';
 import { IMarketPrice } from 'app/shared/model/market-price.model';
 import { getEntity, updateEntity, createEntity, reset } from './market-price.reducer';
 
@@ -91,7 +92,7 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
                 {items
                   ? items.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.itemName}
+                        {MaterialName[otherEntity.itemName]}
                       </option>
                     ))
                   : null}
