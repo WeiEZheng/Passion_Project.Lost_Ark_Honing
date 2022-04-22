@@ -63,7 +63,7 @@ enum Server {
 
 relationship ManyToOne{
 	Characters{user(login)} to User
-    Equipment{Characters(Name)} to Characters
+    Equipment{user(login)} to Characters
 }
 
 service all with serviceImpl
