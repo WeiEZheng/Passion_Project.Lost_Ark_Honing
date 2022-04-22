@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -36,6 +38,7 @@ public class MarketPrice implements Serializable {
 
     @NotNull
     @OneToOne
+    @Unique
     @JoinColumn(unique = true)
     private Item item;
 

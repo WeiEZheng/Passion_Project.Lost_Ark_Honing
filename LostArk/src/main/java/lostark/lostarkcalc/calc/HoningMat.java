@@ -12,7 +12,7 @@ public final class HoningMat {
     private Map<TierEnum, Map<Integer, List<Integer>>> armMats = new HashMap<>();
 
     public HoningMat(){
-        List<Integer> mat = Arrays.asList(350, 400, 6, 0);
+        List<Integer> mat = Arrays.asList(350, 400, 6, 0, 0);
         wepMats.put(TierEnum.Tier1, Map.of(1, mat));
     }
 
