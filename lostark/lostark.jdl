@@ -1,0 +1,70 @@
+entity MarketPrice {
+    ItemName MaterialName required unique
+    ItemPricePerStack Integer required
+    NumberPerStack Integer required
+    TimeUpdated Instant required
+}
+
+entity Characters{
+	Name String required 
+    AdvClass AdvClasses required
+    Server Server required
+}
+
+entity Equipment{
+	Tier TierEnum required
+    HoningLevel Integer required min (0) max (20)
+    EquipmentType EquipType required
+}
+
+enum AdvClasses{
+Artillerist, Bard, Berserker, Deadeye, 
+Deathblade, Destroyer, Glavier, Gunlancer,
+Gunslinger, Paladin,
+Scrapper, Shadowhunter,
+Sharpshooter, Sorceress, Soulfist, Striker, Wardancer
+}
+
+enum EquipType {
+	Armor, Weapon
+}
+
+enum TierEnum{
+	Tier1 ("Tier 1"), Tier2 ("Tier 2"), Tier3Low ("Tier 3 Low"), Tier3Mid ("Tier 3 Mid"), Tier3High ("Tier 3 High")
+}
+
+enum MaterialName{
+	DestructionStoneFragment ("Destruction Stone Fragment"), 
+    GuardianStoneFragment ("Guardian Stone Fragment"), 
+    HarmonyShard ("Harmony Shard"), 
+    HarmonyLeapstone ("Harmony Leapstone"), 
+    StarsBreaths ("Star's Breaths"),
+    DestructionStone ("Destruction Stone"), 
+    GuardianStone ("Guardian Stone"), 
+    LifeShard ("Life Shard"), 
+    LifeLeapstone ("Life Leapstone"), 
+    CaldarrFusionMaterial ("Caldarr Fusion Material"), 
+    MoonsBreaths ("Moon's Breaths"),
+    DestructionStoneCrystal ("Destruction Stone Crystal"), 
+    GuardianStoneCrystal("Guardian Stone Crystal"), 
+    HonorShard ("Honor Shard"), 
+    HonorLeapstone ("Honor Leapstone"), 
+    SimpleOrehaFusionMaterial ("Simple Oreha Fusion Material"),
+    GreatHonorLeapstone ("Great Honor Leapstone"), 
+    BasicOrehaFusionMaterial ("Basic Oreha Fusion Material"), 
+    SolarGrace ("Solar Grace"), 
+    SolarBlessing ("Solar Blessing"), 
+    SolarProtection ("Solar Protection")
+}
+
+enum Server {
+	Azena, Avesta, Ladon, Una, Galatur, Kharmine, Regulus, Karta, Elzowin, Sasha, Adrinne, Aldebaran, Zosma, Vykas, Danube
+}
+
+relationship ManyToOne{
+	Characters{user(login)} to User
+    Equipment{user(login)} to User
+    Equipment{Characters} to Characters{Equipment}
+}
+
+service all with serviceImpl
