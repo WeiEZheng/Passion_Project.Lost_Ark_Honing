@@ -1,4 +1,4 @@
-package lostark.lostarkcalc.calc;
+package lostark.lostarkcalc.calc.model;
 
 import lostark.lostarkcalc.domain.Equipment;
 import lostark.lostarkcalc.domain.Item;

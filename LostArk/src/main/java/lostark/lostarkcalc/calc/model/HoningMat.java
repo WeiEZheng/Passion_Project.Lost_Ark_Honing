@@ -1,4 +1,4 @@
-package lostark.lostarkcalc.calc;
+package lostark.lostarkcalc.calc.model;
 
 import lostark.lostarkcalc.domain.enumeration.EquipType;
 import lostark.lostarkcalc.domain.enumeration.TierEnum;
@@ -13,7 +13,7 @@ public final class HoningMat {
 
     public HoningMat(){
         List<Integer> mat = Arrays.asList(350, 400, 6, 0, 0);
-        wepMats.put(TierEnum.Tier1, Map.of(1, mat));
+        wepMats.put(TierEnum.Tier1, Map.of(6, mat));
     }
 
     public static HoningMat getInstance(){
