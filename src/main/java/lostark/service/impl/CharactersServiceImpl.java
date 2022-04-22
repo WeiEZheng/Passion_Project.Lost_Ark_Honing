@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import lostark.domain.Characters;
 import lostark.repository.CharactersRepository;
+import lostark.repository.UserRepository;
+import lostark.security.SecurityUtils;
 import lostark.service.CharactersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,9 @@ public class CharactersServiceImpl implements CharactersService {
 
     private final CharactersRepository charactersRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public CharactersServiceImpl(CharactersRepository charactersRepository) {
         this.charactersRepository = charactersRepository;
     }
@@ -30,13 +36,14 @@ public class CharactersServiceImpl implements CharactersService {
     @Override
     public Characters save(Characters characters) {
         log.debug("Request to save Characters : {}", characters);
+        characters.setUser(SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).get());
         return charactersRepository.save(characters);
     }
 
     @Override
     public Characters update(Characters characters) {
         log.debug("Request to save Characters : {}", characters);
-        return charactersRepository.save(characters);
+        return this.save(characters);
     }
 
     @Override
@@ -58,14 +65,14 @@ public class CharactersServiceImpl implements CharactersService {
 
                 return existingCharacters;
             })
-            .map(charactersRepository::save);
+            .map(this::save);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Characters> findAll() {
         log.debug("Request to get all Characters");
-        return charactersRepository.findAllWithEagerRelationships();
+        return charactersRepository.findByUserIsCurrentUser();
     }
 
     public Page<Characters> findAllWithEagerRelationships(Pageable pageable) {

@@ -1,5 +1,6 @@
 package lostark.service.impl;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import lostark.domain.MarketPrice;
@@ -29,13 +30,14 @@ public class MarketPriceServiceImpl implements MarketPriceService {
     @Override
     public MarketPrice save(MarketPrice marketPrice) {
         log.debug("Request to save MarketPrice : {}", marketPrice);
+        marketPrice.setTimeUpdated(Instant.now());
         return marketPriceRepository.save(marketPrice);
     }
 
     @Override
     public MarketPrice update(MarketPrice marketPrice) {
         log.debug("Request to save MarketPrice : {}", marketPrice);
-        return marketPriceRepository.save(marketPrice);
+        return this.save(marketPrice);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class MarketPriceServiceImpl implements MarketPriceService {
 
                 return existingMarketPrice;
             })
-            .map(marketPriceRepository::save);
+            .map(this::save);
     }
 
     @Override
@@ -84,6 +86,6 @@ public class MarketPriceServiceImpl implements MarketPriceService {
     }
 
     public Optional<MarketPrice> findOneByMaterialName(MaterialName materialName) {
-        return marketPriceRepository.findOneByMaterialName(materialName);
+        return marketPriceRepository.findOneByItemName(materialName);
     }
 }

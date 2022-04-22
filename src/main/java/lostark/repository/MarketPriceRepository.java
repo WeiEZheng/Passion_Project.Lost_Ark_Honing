@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface MarketPriceRepository extends JpaRepository<MarketPrice, Long> {
-    Optional<MarketPrice> findOneByMaterialName(MaterialName materialName);
+    Optional<MarketPrice> findOneByItemName(MaterialName materialName);
 }
