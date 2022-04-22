@@ -73,7 +73,7 @@ public class CharactersServiceImpl implements CharactersService {
     @Transactional(readOnly = true)
     public List<Characters> findAll() {
         log.debug("Request to get all Characters");
-        return charactersRepository.findAllWithEagerRelationships();
+        return charactersRepository.findByBelongToIsCurrentUser();
     }
 
     public Page<Characters> findAllWithEagerRelationships(Pageable pageable) {

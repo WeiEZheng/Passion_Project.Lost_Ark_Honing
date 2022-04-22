@@ -55,7 +55,6 @@ public class EquipmentServiceImpl implements EquipmentService {
                 if (equipment.getEquipmentType() != null) {
                     existingEquipment.setEquipmentType(equipment.getEquipmentType());
                 }
-
                 return existingEquipment;
             })
             .map(equipmentRepository::save);
@@ -65,7 +64,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Transactional(readOnly = true)
     public List<Equipment> findAll() {
         log.debug("Request to get all Equipment");
-        return equipmentRepository.findAllWithEagerRelationships();
+        return equipmentRepository.findByBelongToIsCurrentUser();
     }
 
     public Page<Equipment> findAllWithEagerRelationships(Pageable pageable) {
