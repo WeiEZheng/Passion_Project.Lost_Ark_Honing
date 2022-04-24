@@ -7,10 +7,12 @@ import Equipment from './equipment';
 import EquipmentDetail from './equipment-detail';
 import EquipmentUpdate from './equipment-update';
 import EquipmentDeleteDialog from './equipment-delete-dialog';
+import EquipmentHoneCalc from './equipment-hone-calc';
 
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/honingcalc`} component={EquipmentHoneCalc} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={EquipmentUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={EquipmentUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={EquipmentDetail} />
