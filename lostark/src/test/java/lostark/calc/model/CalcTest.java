@@ -63,4 +63,16 @@ class CalcTest {
 
     @Test
     void getCost() {}
+
+    @Test
+    void compareCost() {
+    }
+
+    @Test
+    void getExtraCost() {
+    }
+
+    @Test
+    void simulate() {
+    }
 }
