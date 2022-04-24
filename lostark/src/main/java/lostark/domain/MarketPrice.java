@@ -37,7 +37,7 @@ public class MarketPrice implements Serializable {
     @Column(name = "number_per_stack", nullable = false)
     private Integer numberPerStack;
 
-    @NotNull
+//    @NotNull auto-filled
     @Column(name = "time_updated", nullable = false)
     private Instant timeUpdated;
 

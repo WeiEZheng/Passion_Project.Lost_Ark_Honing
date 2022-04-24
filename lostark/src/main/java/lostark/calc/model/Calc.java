@@ -22,12 +22,12 @@ public class Calc {
         cost +=
             getCost(
                 mat.get(0),
-                marketPriceService.findOneByMaterialName(getStoneName(equipment.getTier(), equipment.getEquipmentType())).get()
+                marketPriceService.findOneByItemName(getStoneName(equipment.getTier(), equipment.getEquipmentType())).get()
             );
-        cost += getCost(mat.get(1), marketPriceService.findOneByMaterialName(getShardName(equipment.getTier())).get());
-        cost += getCost(mat.get(2), marketPriceService.findOneByMaterialName(getLeapName(equipment.getTier())).get());
+        cost += getCost(mat.get(1), marketPriceService.findOneByItemName(getShardName(equipment.getTier())).get());
+        cost += getCost(mat.get(2), marketPriceService.findOneByItemName(getLeapName(equipment.getTier())).get());
         if (mat.get(4) != 0) {
-            cost += getCost(mat.get(4), marketPriceService.findOneByMaterialName(getFusionName(equipment.getTier())).get());
+            cost += getCost(mat.get(4), marketPriceService.findOneByItemName(getFusionName(equipment.getTier())).get());
         }
         cost += mat.get(4);
         return cost;

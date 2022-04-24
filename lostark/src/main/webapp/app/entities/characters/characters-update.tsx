@@ -86,7 +86,6 @@ export const CharactersUpdate = (props: RouteComponentProps<{ id: string }>) => 
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="characters-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField
                 label="Name"
                 id="characters-name"
@@ -110,16 +109,6 @@ export const CharactersUpdate = (props: RouteComponentProps<{ id: string }>) => 
                     {server}
                   </option>
                 ))}
-              </ValidatedField>
-              <ValidatedField id="characters-user" name="user" data-cy="user" label="User" type="select">
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.login}
-                      </option>
-                    ))
-                  : null}
               </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/characters" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

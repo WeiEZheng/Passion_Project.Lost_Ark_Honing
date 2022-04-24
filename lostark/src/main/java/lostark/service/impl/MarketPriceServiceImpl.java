@@ -1,8 +1,10 @@
 package lostark.service.impl;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import lostark.domain.MarketPrice;
+import lostark.domain.enumeration.MaterialName;
 import lostark.repository.MarketPriceRepository;
 import lostark.service.MarketPriceService;
 import org.slf4j.Logger;
@@ -28,13 +30,14 @@ public class MarketPriceServiceImpl implements MarketPriceService {
     @Override
     public MarketPrice save(MarketPrice marketPrice) {
         log.debug("Request to save MarketPrice : {}", marketPrice);
+        marketPrice.setTimeUpdated(Instant.now());
         return marketPriceRepository.save(marketPrice);
     }
 
     @Override
     public MarketPrice update(MarketPrice marketPrice) {
         log.debug("Request to save MarketPrice : {}", marketPrice);
-        return marketPriceRepository.save(marketPrice);
+        return this.save(marketPrice);
     }
 
     @Override
@@ -56,10 +59,9 @@ public class MarketPriceServiceImpl implements MarketPriceService {
                 if (marketPrice.getTimeUpdated() != null) {
                     existingMarketPrice.setTimeUpdated(marketPrice.getTimeUpdated());
                 }
-
                 return existingMarketPrice;
             })
-            .map(marketPriceRepository::save);
+            .map(this::save);
     }
 
     @Override
@@ -80,5 +82,10 @@ public class MarketPriceServiceImpl implements MarketPriceService {
     public void delete(Long id) {
         log.debug("Request to delete MarketPrice : {}", id);
         marketPriceRepository.deleteById(id);
+    }
+
+    public Optional<MarketPrice> findOneByItemName(MaterialName materialName){
+        log.debug("Request to get MarketPrice : {}", materialName);
+        return  marketPriceRepository.findOneByItemName(materialName);
     }
 }

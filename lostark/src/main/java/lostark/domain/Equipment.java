@@ -44,6 +44,7 @@ public class Equipment implements Serializable {
     @ManyToOne
     private User user;
 
+    @NotNull
     @ManyToOne
     @JsonIgnoreProperties(value = { "user", "equipment" }, allowSetters = true)
     private Characters characters;

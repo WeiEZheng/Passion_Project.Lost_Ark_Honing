@@ -22,9 +22,6 @@ export const CharactersDetail = (props: RouteComponentProps<{ id: string }>) => 
       <Col md="8">
         <h2 data-cy="charactersDetailsHeading">Characters</h2>
         <dl className="jh-entity-details">
-          <dt>
-            <span id="id">ID</span>
-          </dt>
           <dd>{charactersEntity.id}</dd>
           <dt>
             <span id="name">Name</span>
@@ -37,9 +34,6 @@ export const CharactersDetail = (props: RouteComponentProps<{ id: string }>) => 
           <dt>
             <span id="server">Server</span>
           </dt>
-          <dd>{charactersEntity.server}</dd>
-          <dt>User</dt>
-          <dd>{charactersEntity.user ? charactersEntity.user.login : ''}</dd>
         </dl>
         <Button tag={Link} to="/characters" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

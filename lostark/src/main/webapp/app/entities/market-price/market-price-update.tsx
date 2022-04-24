@@ -81,11 +81,10 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="market-price-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="Item Name" id="market-price-itemName" name="itemName" data-cy="itemName" type="select">
                 {materialNameValues.map(materialName => (
                   <option value={materialName} key={materialName}>
-                    {materialName}
+                    {MaterialName[materialName]}
                   </option>
                 ))}
               </ValidatedField>
@@ -109,17 +108,6 @@ export const MarketPriceUpdate = (props: RouteComponentProps<{ id: string }>) =>
                 validate={{
                   required: { value: true, message: 'This field is required.' },
                   validate: v => isNumber(v) || 'This field should be a number.',
-                }}
-              />
-              <ValidatedField
-                label="Time Updated"
-                id="market-price-timeUpdated"
-                name="timeUpdated"
-                data-cy="timeUpdated"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: 'This field is required.' },
                 }}
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/market-price" replace color="info">
