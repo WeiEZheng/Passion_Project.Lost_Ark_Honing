@@ -4,10 +4,11 @@ import { Button, Row, Col } from 'reactstrap';
 import { TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_LOCAL_DATETIME_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './market-price.reducer';
+import { MaterialName } from 'app/shared/model/enumerations/material-name.model';
 
 export const MarketPriceDetail = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
@@ -26,7 +27,7 @@ export const MarketPriceDetail = (props: RouteComponentProps<{ id: string }>) =>
           <dt>
             <span id="itemName">Item Name</span>
           </dt>
-          <dd>{marketPriceEntity.itemName}</dd>
+          <dd>{MaterialName[marketPriceEntity.itemName]}</dd>
           <dt>
             <span id="itemPricePerStack">Item Price Per Stack</span>
           </dt>
@@ -40,7 +41,7 @@ export const MarketPriceDetail = (props: RouteComponentProps<{ id: string }>) =>
           </dt>
           <dd>
             {marketPriceEntity.timeUpdated ? (
-              <TextFormat value={marketPriceEntity.timeUpdated} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={marketPriceEntity.timeUpdated} type="date" format={APP_LOCAL_DATETIME_FORMAT} />
             ) : null}
           </dd>
         </dl>

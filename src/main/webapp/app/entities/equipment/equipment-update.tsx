@@ -55,7 +55,6 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
     const entity = {
       ...equipmentEntity,
       ...values,
-      user: users.find(it => it.id.toString() === values.user.toString()),
       characters: characters.find(it => it.id.toString() === values.characters.toString()),
     };
 
@@ -92,11 +91,10 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="equipment-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="Tier" id="equipment-tier" name="tier" data-cy="tier" type="select">
                 {tierEnumValues.map(tierEnum => (
                   <option value={tierEnum} key={tierEnum}>
-                    {tierEnum}
+                    {TierEnum[tierEnum]}
                   </option>
                 ))}
               </ValidatedField>
@@ -126,22 +124,12 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
                   </option>
                 ))}
               </ValidatedField>
-              <ValidatedField id="equipment-user" name="user" data-cy="user" label="User" type="select">
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.login}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="equipment-characters" name="characters" data-cy="characters" label="Characters" type="select">
+              <ValidatedField id="equipment-characters" name="characters" data-cy="characters" label="Character" type="select">
                 <option value="" key="0" />
                 {characters
                   ? characters.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IEquipment } from 'app/shared/model/equipment.model';
 import { getEntities } from './equipment.reducer';
+import { TierEnum } from 'app/shared/model/enumerations/tier-enum.model';
 
 export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
@@ -49,7 +50,6 @@ export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
                 <th>Tier</th>
                 <th>Honing Level</th>
                 <th>Equipment Type</th>
-                <th>User</th>
                 <th>Characters</th>
                 <th />
               </tr>
@@ -62,12 +62,17 @@ export const Equipment = (props: RouteComponentProps<{ url: string }>) => {
                       {equipment.id}
                     </Button>
                   </td>
-                  <td>{equipment.tier}</td>
+                  <td>{TierEnum[equipment.tier]}</td>
                   <td>{equipment.honingLevel}</td>
                   <td>{equipment.equipmentType}</td>
-                  <td>{equipment.user ? equipment.user.login : ''}</td>
                   <td>
-                    {equipment.characters ? <Link to={`/characters/${equipment.characters.id}`}>{equipment.characters.id}</Link> : ''}
+                    {equipment.characters ? (
+                      <Link to={`/characters/${equipment.characters.id}`} style={{ color: 'white' }}>
+                        {equipment.characters.name}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

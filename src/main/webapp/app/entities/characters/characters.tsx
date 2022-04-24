@@ -45,11 +45,9 @@ export const Characters = (props: RouteComponentProps<{ url: string }>) => {
           <Table responsive>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Adv Class</th>
                 <th>Server</th>
-                <th>User</th>
                 <th />
               </tr>
             </thead>
@@ -58,13 +56,11 @@ export const Characters = (props: RouteComponentProps<{ url: string }>) => {
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
                     <Button tag={Link} to={`/characters/${characters.id}`} color="link" size="sm">
-                      {characters.id}
+                      {characters.name}
                     </Button>
                   </td>
-                  <td>{characters.name}</td>
                   <td>{characters.advClass}</td>
                   <td>{characters.server}</td>
-                  <td>{characters.user ? characters.user.login : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/characters/${characters.id}`} color="info" size="sm" data-cy="entityDetailsButton">

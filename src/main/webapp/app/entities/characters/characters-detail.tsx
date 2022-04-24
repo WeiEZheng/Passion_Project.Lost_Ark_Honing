@@ -20,13 +20,8 @@ export const CharactersDetail = (props: RouteComponentProps<{ id: string }>) => 
   return (
     <Row>
       <Col md="8">
-        <h2 data-cy="charactersDetailsHeading">Characters</h2>
+        <h2 data-cy="charactersDetailsHeading">{charactersEntity.name}</h2>
         <dl className="jh-entity-details">
-          <dd>{charactersEntity.id}</dd>
-          <dt>
-            <span id="name">Name</span>
-          </dt>
-          <dd>{charactersEntity.name}</dd>
           <dt>
             <span id="advClass">Adv Class</span>
           </dt>
@@ -34,6 +29,7 @@ export const CharactersDetail = (props: RouteComponentProps<{ id: string }>) => 
           <dt>
             <span id="server">Server</span>
           </dt>
+          <dd>{charactersEntity.server}</dd>
         </dl>
         <Button tag={Link} to="/characters" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -8,6 +8,7 @@ import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './equipment.reducer';
+import { TierEnum } from 'app/shared/model/enumerations/tier-enum.model';
 
 export const EquipmentDetail = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
@@ -22,11 +23,10 @@ export const EquipmentDetail = (props: RouteComponentProps<{ id: string }>) => {
       <Col md="8">
         <h2 data-cy="equipmentDetailsHeading">Equipment</h2>
         <dl className="jh-entity-details">
-          <dd>{equipmentEntity.id}</dd>
           <dt>
             <span id="tier">Tier</span>
           </dt>
-          <dd>{equipmentEntity.tier}</dd>
+          <dd>{TierEnum[equipmentEntity.tier]}</dd>
           <dt>
             <span id="honingLevel">Honing Level</span>
           </dt>
@@ -35,8 +35,8 @@ export const EquipmentDetail = (props: RouteComponentProps<{ id: string }>) => {
             <span id="equipmentType">Equipment Type</span>
           </dt>
           <dd>{equipmentEntity.equipmentType}</dd>
-          <dt>Characters</dt>
-          <dd>{equipmentEntity.characters ? equipmentEntity.characters.id : ''}</dd>
+          <dt>Character</dt>
+          <dd>{equipmentEntity.characters ? equipmentEntity.characters.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/equipment" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

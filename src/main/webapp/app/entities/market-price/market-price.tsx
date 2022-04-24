@@ -4,11 +4,12 @@ import { Button, Table } from 'reactstrap';
 import { Translate, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_LOCAL_DATETIME_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IMarketPrice } from 'app/shared/model/market-price.model';
 import { getEntities } from './market-price.reducer';
+import { MaterialName } from 'app/shared/model/enumerations/material-name.model';
 
 export const MarketPrice = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
@@ -45,7 +46,6 @@ export const MarketPrice = (props: RouteComponentProps<{ url: string }>) => {
           <Table responsive>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Item Name</th>
                 <th>Item Price Per Stack</th>
                 <th>Number Per Stack</th>
@@ -58,14 +58,15 @@ export const MarketPrice = (props: RouteComponentProps<{ url: string }>) => {
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
                     <Button tag={Link} to={`/market-price/${marketPrice.id}`} color="link" size="sm">
-                      {marketPrice.id}
+                      {MaterialName[marketPrice.itemName]}
                     </Button>
                   </td>
-                  <td>{marketPrice.itemName}</td>
                   <td>{marketPrice.itemPricePerStack}</td>
                   <td>{marketPrice.numberPerStack}</td>
                   <td>
-                    {marketPrice.timeUpdated ? <TextFormat type="date" value={marketPrice.timeUpdated} format={APP_DATE_FORMAT} /> : null}
+                    {marketPrice.timeUpdated ? (
+                      <TextFormat type="date" value={marketPrice.timeUpdated} format={APP_LOCAL_DATETIME_FORMAT} />
+                    ) : null}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
