@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/lostark/lostark.iml" filepath="$PROJECT_DIR$/lostark/lostark.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lostark.iml" filepath="$PROJECT_DIR$/lostark.iml" />
     </modules>
   </component>
 </project>

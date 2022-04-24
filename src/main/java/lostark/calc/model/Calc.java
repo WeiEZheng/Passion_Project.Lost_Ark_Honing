@@ -116,7 +116,7 @@ public class Calc {
         Integer count = 0;
         List<Integer> waitTime = new ArrayList<>();
         while (true) {
-            if (random.nextDouble(1) <= (basePercent + (count * additionPercentPerFail)) || count > failLimit) {
+            if (random.nextDouble() <= (basePercent + (count * additionPercentPerFail)) || count > failLimit) {
                 waitTime.add(count + 1);
                 count = 0;
                 continue;
