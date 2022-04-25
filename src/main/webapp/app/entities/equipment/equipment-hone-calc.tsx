@@ -6,23 +6,27 @@ import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { isInteger, values } from 'lodash';
+import { getEntity } from './equipment.reducer';
+
+const apiUrl = 'api/equipment';
 
 export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) => {
-  const requestBody = useAppSelector(state => state.request.entity);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
+  const equipmentEntity = useAppSelector(state => state.equipment.entity);
+  // const requestEntity = useAppSelector(state => state.effRequest.entity);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(getEntity(props.match.params.id));
+  }, []);
 
   const honeCalc = values => {
-    setLoading(true);
-    const request = {
-      ...requestBody,
-      ...values,
-    };
+    //   setLoading(true);
+    //   const entity = {
+    //     ...requestEntity,
+    //     ...values
+    //   }
   };
-
   return (
     <div>
       <Row className="justify-content-center">
@@ -43,7 +47,7 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 }}
               />
               <ValidatedField
-                label="additionPercentPerFail"
+                label="Addition Percent Per Fail"
                 id="request-additionPercentPerFail"
                 name="additionPercentPerFail"
                 data-cy="additionPercentPerFail"
@@ -56,7 +60,7 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 }}
               />
               <ValidatedField
-                label="maxPercentAfterMats"
+                label="Max Percent After Mats"
                 id="request-maxPercentAfterMats"
                 name="maxPercentAfterMats"
                 data-cy="maxPercentAfterMats"
@@ -69,7 +73,7 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 }}
               />
               <ValidatedField
-                label="fusionMat1Amount"
+                label="Max Fusion 1 Material"
                 id="request-fusionMat1Amount"
                 name="fusionMat1Amount"
                 data-cy="fusionMat1Amount"
@@ -77,11 +81,11 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 validate={{
                   required: { value: true, message: 'This field is required.' },
                   min: { value: 0, message: 'This field should be at least 0.' },
-                  validate: v => isInteger(v) || 'This field should be a number.',
+                  validate: v => isNumber(v) || 'This field should be a number.',
                 }}
               />
               <ValidatedField
-                label="fusionMat2Amount"
+                label="Max Fusion 2 Material"
                 id="request-fusionMat2Amount"
                 name="fusionMat2Amount"
                 data-cy="fusionMat2Amount"
@@ -89,11 +93,11 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 validate={{
                   required: { value: true, message: 'This field is required.' },
                   min: { value: 0, message: 'This field should be at least 0.' },
-                  validate: v => isInteger(v) || 'This field should be a number.',
+                  validate: v => isNumber(v) || 'This field should be a number.',
                 }}
               />
               <ValidatedField
-                label="fusionMat3Amount"
+                label="Max Fusion 3 Material"
                 id="request-fusionMat3Amount"
                 name="fusionMat3Amount"
                 data-cy="fusionMat3Amount"
@@ -101,11 +105,11 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 validate={{
                   required: { value: true, message: 'This field is required.' },
                   min: { value: 0, message: 'This field should be at least 0.' },
-                  validate: v => isInteger(v) || 'This field should be a number.',
+                  validate: v => isNumber(v) || 'This field should be a number.',
                 }}
               />
               <ValidatedField
-                label="failLimit"
+                label="Fail Limit"
                 id="request-failLimit"
                 name="failLimit"
                 data-cy="failLimit"
@@ -113,10 +117,10 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 validate={{
                   required: { value: true, message: 'This field is required.' },
                   min: { value: 0, message: 'This field should be at least 0.' },
-                  validate: v => isInteger(v) || 'This field should be a number.',
+                  validate: v => isNumber(v) || 'This field should be a number.',
                 }}
               />
-              <Button tag={Link} id="cancel" data-cy="CancelButton" to="/equipment/${id}}" replace color="info">
+              <Button tag={Link} id="cancel" data-cy="CancelButton" to={`/equipment/${equipmentEntity.id}`} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Back</span>
@@ -124,7 +128,7 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
               &nbsp;
               <Button color="primary" id="save-entity" data-cy="HoneCalcButton" type="submit" disabled={loading}>
                 <FontAwesomeIcon icon="save" />
-                &nbsp; Save
+                &nbsp; Start
               </Button>
             </ValidatedForm>
           }

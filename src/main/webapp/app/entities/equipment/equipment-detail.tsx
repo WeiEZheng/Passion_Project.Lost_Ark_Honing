@@ -47,7 +47,7 @@ export const EquipmentDetail = (props: RouteComponentProps<{ id: string }>) => {
         </Button>
         &nbsp;
         <Button tag={Link} to={`/equipment/${equipmentEntity.id}/honingCalc`} replace color="primary">
-          <FontAwesomeIcon icon="calculator-simple" /> <span className="d-none d-md-inline">Edit</span>
+          <FontAwesomeIcon icon="calculator" /> <span className="d-none d-md-inline">Calculate</span>
         </Button>
       </Col>
     </Row>
