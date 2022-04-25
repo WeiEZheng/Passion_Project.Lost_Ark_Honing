@@ -14,19 +14,20 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const equipmentEntity = useAppSelector(state => state.equipment.entity);
-  // const requestEntity = useAppSelector(state => state.effRequest.entity);
+  const requestEntity = useAppSelector(state => state.effRequest.entity);
 
   useEffect(() => {
     dispatch(getEntity(props.match.params.id));
   }, []);
 
   const honeCalc = values => {
-    //   setLoading(true);
-    //   const entity = {
-    //     ...requestEntity,
-    //     ...values
-    //   }
+    setLoading(true);
+    const entity = {
+      ...requestEntity,
+      ...values,
+    };
   };
+
   return (
     <div>
       <Row className="justify-content-center">

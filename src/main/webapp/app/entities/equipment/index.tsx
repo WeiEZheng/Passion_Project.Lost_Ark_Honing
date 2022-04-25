@@ -12,7 +12,7 @@ import EquipmentHoneCalc from './equipment-hone-calc';
 const Routes = ({ match }) => (
   <>
     <Switch>
-      <ErrorBoundaryRoute exact path={`${match.url}/:id/honingcalc`} component={EquipmentHoneCalc} />
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/honing-calc`} component={EquipmentHoneCalc} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={EquipmentUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={EquipmentUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={EquipmentDetail} />
