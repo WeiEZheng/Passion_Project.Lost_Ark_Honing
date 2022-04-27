@@ -18,8 +18,7 @@ public class CalcController {
     EquipmentService equipmentService;
 
     @GetMapping("/equipment/{id}/honeCalc}")
-    @ResponseBody
-    public ResponseEntity<EffResponse> effCalc(@PathVariable(value = "id") Long id, @RequestBody EffRequest effRequest) {
+    public ResponseEntity<Double> effCalc(@PathVariable(value = "id") Long id, @RequestBody EffRequest effRequest) {
         Equipment equipment = equipmentService.findOne(id).get();
         if (equipment == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Double amountDiff = Calc.compareCost(
@@ -32,6 +31,6 @@ public class CalcController {
             effRequest.getFusionMat2Amount(),
             effRequest.getFusionMat3Amount()
         );
-        return new ResponseEntity<>(new EffResponse(amountDiff), HttpStatus.OK);
+        return new ResponseEntity<>(amountDiff, HttpStatus.OK);
     }
 }

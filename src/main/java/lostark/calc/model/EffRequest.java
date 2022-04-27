@@ -1,9 +1,55 @@
 package lostark.calc.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class EffRequest {
 
-    Double basePercent, additionPercentPerFail, maxPercentAfterMats;
-    Integer fusionMat1Amount, fusionMat2Amount, fusionMat3Amount, failLimit;
+    @Id
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "basePercent")
+    Double basePercent;
+
+    @Column(name = "additionPercentPerFail")
+    Double additionPercentPerFail;
+
+    @Column(name = "maxPercentAfterMats")
+    Double maxPercentAfterMats;
+
+    @Column(name = "fusionMat1Amount")
+    Integer fusionMat1Amount;
+
+    @Column(name = "fusionMat2Amount")
+    Integer fusionMat2Amount;
+
+    @Column(name = "fusionMat3Amount")
+    Integer fusionMat3Amount;
+
+    @Column(name = "failLimit")
+    Integer failLimit;
+
+    @Column(name = "eqid")
+    Long eqid;
+
+    public Long getEqid() {
+        return eqid;
+    }
+
+    public void setEqid(Long eqid) {
+        this.eqid = eqid;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Double getBasePercent() {
         return basePercent;

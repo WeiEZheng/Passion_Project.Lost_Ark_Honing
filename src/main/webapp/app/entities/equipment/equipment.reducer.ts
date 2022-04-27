@@ -4,6 +4,7 @@ import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/t
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 import { IEquipment, defaultValue } from 'app/shared/model/equipment.model';
+import { effRequest } from 'app/shared/model/effRequest.model';
 
 const initialState: EntityState<IEquipment> = {
   loading: false,
@@ -116,6 +117,16 @@ export const EquipmentSlice = createEntitySlice({
       });
   },
 });
+
+export const requestEff = createAsyncThunk(
+  'equipment/requestEff',
+  async (entity: effRequest) => {
+    const id = entity.eqid;
+    const result = await axios.get<number>(`${apiUrl}/${id}/honeCalc`, cleanEntity(entity));
+    return result;
+  },
+  { serializeError: serializeAxiosError }
+);
 
 export const { reset } = EquipmentSlice.actions;
 

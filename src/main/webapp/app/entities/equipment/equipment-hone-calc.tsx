@@ -6,7 +6,9 @@ import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity } from './equipment.reducer';
+import { getEntity, requestEff } from './equipment.reducer';
+import axios from 'axios';
+import { effRequest } from 'app/shared/model/effRequest.model';
 
 const apiUrl = 'api/equipment';
 
@@ -14,8 +16,8 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const equipmentEntity = useAppSelector(state => state.equipment.entity);
-  const requestEntity = useAppSelector(state => state.effRequest.entity);
-
+  const requestEntity = useAppSelector(state => state.effRequest);
+  const [isNew] = useState(!props.match.params || !props.match.params.id);
   useEffect(() => {
     dispatch(getEntity(props.match.params.id));
   }, []);
@@ -25,15 +27,34 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
     const entity = {
       ...requestEntity,
       ...values,
+      eqid: equipmentEntity.id,
     };
+    const result = dispatch(requestEff(entity));
+    setLoading(false);
+    // eslint-disable-next-line no-console
+    console.log(result);
   };
+
+  const defaultValues = () =>
+    isNew
+      ? {}
+      : {
+          basePercent: 0,
+          additionPercentPerFail: 0,
+          maxPercentAfterMats: 0,
+          fusionMat1Amount: 0,
+          fusionMat2Amount: 0,
+          fusionMat3Amount: 0,
+          failLimit: 0,
+          ...requestEntity,
+        };
 
   return (
     <div>
       <Row className="justify-content-center">
         <Col md="8">
           {
-            <ValidatedForm onSubmit={honeCalc}>
+            <ValidatedForm defaultValues={defaultValues()} onSubmit={honeCalc}>
               <ValidatedField
                 label="Base Percent"
                 id="request-basePercent"
@@ -138,4 +159,5 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
     </div>
   );
 };
+
 export default EquipmentHoneCalc;
