@@ -49,7 +49,18 @@ public class Equipment implements Serializable {
     @JsonIgnoreProperties(value = { "user", "equipment" }, allowSetters = true)
     private Characters characters;
 
+    @Column(name = "amount_diff")
+    private Double amountDiff;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Double getAmountDiff() {
+        return amountDiff;
+    }
+
+    public void setAmountDiff(Double amountDiff) {
+        this.amountDiff = amountDiff;
+    }
 
     public Long getId() {
         return this.id;

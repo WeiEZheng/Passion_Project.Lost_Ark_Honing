@@ -29,6 +29,9 @@
             <column name="characters_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="amount_diff" type="double">
+                <constraints nullable="true"/>
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -53,6 +56,7 @@
             <column name="tier" type="string"/>
             <column name="honing_level" type="numeric"/>
             <column name="equipment_type" type="string"/>
+            <column name="amount_diff" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

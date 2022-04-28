@@ -42,10 +42,18 @@ public class EffRequest implements Serializable {
     @Column(name = "fail_limit")
     private Integer failLimit;
 
-    @Column(name = "amount_diff")
-    private Double amountDiff;
+    @Column(name = "eqid")
+    private Long eqid;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Long getEqid() {
+        return eqid;
+    }
+
+    public void setEqid(Long eqid) {
+        this.eqid = eqid;
+    }
 
     public Long getId() {
         return this.id;
@@ -151,19 +159,6 @@ public class EffRequest implements Serializable {
         this.failLimit = failLimit;
     }
 
-    public Double getAmountDiff() {
-        return this.amountDiff;
-    }
-
-    public EffRequest amountDiff(Double amountDiff) {
-        this.setAmountDiff(amountDiff);
-        return this;
-    }
-
-    public void setAmountDiff(Double amountDiff) {
-        this.amountDiff = amountDiff;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -195,7 +190,7 @@ public class EffRequest implements Serializable {
             ", fusionMat2Amount=" + getFusionMat2Amount() +
             ", fusionMat3Amount=" + getFusionMat3Amount() +
             ", failLimit=" + getFailLimit() +
-            ", amountDiff=" + getAmountDiff() +
+            ", eqid=" + getEqid() +
             "}";
     }
 }

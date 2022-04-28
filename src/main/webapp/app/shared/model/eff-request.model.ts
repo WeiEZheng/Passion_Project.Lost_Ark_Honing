@@ -7,7 +7,7 @@ export interface IEffRequest {
   fusionMat2Amount?: number | null;
   fusionMat3Amount?: number | null;
   failLimit?: number | null;
-  amountDiff?: number | null;
+  eqid?: number | null;
 }
 
 export const defaultValue: Readonly<IEffRequest> = {};

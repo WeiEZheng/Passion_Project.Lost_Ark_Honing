@@ -50,9 +50,6 @@ class EffRequestResourceIT {
     private static final Integer DEFAULT_FAIL_LIMIT = 1;
     private static final Integer UPDATED_FAIL_LIMIT = 2;
 
-    private static final Double DEFAULT_AMOUNT_DIFF = 1D;
-    private static final Double UPDATED_AMOUNT_DIFF = 2D;
-
     private static final String ENTITY_API_URL = "/api/eff-requests";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -84,8 +81,7 @@ class EffRequestResourceIT {
             .fusionMat1Amount(DEFAULT_FUSION_MAT_1_AMOUNT)
             .fusionMat2Amount(DEFAULT_FUSION_MAT_2_AMOUNT)
             .fusionMat3Amount(DEFAULT_FUSION_MAT_3_AMOUNT)
-            .failLimit(DEFAULT_FAIL_LIMIT)
-            .amountDiff(DEFAULT_AMOUNT_DIFF);
+            .failLimit(DEFAULT_FAIL_LIMIT);
         return effRequest;
     }
 
@@ -103,8 +99,7 @@ class EffRequestResourceIT {
             .fusionMat1Amount(UPDATED_FUSION_MAT_1_AMOUNT)
             .fusionMat2Amount(UPDATED_FUSION_MAT_2_AMOUNT)
             .fusionMat3Amount(UPDATED_FUSION_MAT_3_AMOUNT)
-            .failLimit(UPDATED_FAIL_LIMIT)
-            .amountDiff(UPDATED_AMOUNT_DIFF);
+            .failLimit(UPDATED_FAIL_LIMIT);
         return effRequest;
     }
 
@@ -133,7 +128,6 @@ class EffRequestResourceIT {
         assertThat(testEffRequest.getFusionMat2Amount()).isEqualTo(DEFAULT_FUSION_MAT_2_AMOUNT);
         assertThat(testEffRequest.getFusionMat3Amount()).isEqualTo(DEFAULT_FUSION_MAT_3_AMOUNT);
         assertThat(testEffRequest.getFailLimit()).isEqualTo(DEFAULT_FAIL_LIMIT);
-        assertThat(testEffRequest.getAmountDiff()).isEqualTo(DEFAULT_AMOUNT_DIFF);
     }
 
     @Test
@@ -172,8 +166,7 @@ class EffRequestResourceIT {
             .andExpect(jsonPath("$.[*].fusionMat1Amount").value(hasItem(DEFAULT_FUSION_MAT_1_AMOUNT)))
             .andExpect(jsonPath("$.[*].fusionMat2Amount").value(hasItem(DEFAULT_FUSION_MAT_2_AMOUNT)))
             .andExpect(jsonPath("$.[*].fusionMat3Amount").value(hasItem(DEFAULT_FUSION_MAT_3_AMOUNT)))
-            .andExpect(jsonPath("$.[*].failLimit").value(hasItem(DEFAULT_FAIL_LIMIT)))
-            .andExpect(jsonPath("$.[*].amountDiff").value(hasItem(DEFAULT_AMOUNT_DIFF.doubleValue())));
+            .andExpect(jsonPath("$.[*].failLimit").value(hasItem(DEFAULT_FAIL_LIMIT)));
     }
 
     @Test
@@ -194,8 +187,7 @@ class EffRequestResourceIT {
             .andExpect(jsonPath("$.fusionMat1Amount").value(DEFAULT_FUSION_MAT_1_AMOUNT))
             .andExpect(jsonPath("$.fusionMat2Amount").value(DEFAULT_FUSION_MAT_2_AMOUNT))
             .andExpect(jsonPath("$.fusionMat3Amount").value(DEFAULT_FUSION_MAT_3_AMOUNT))
-            .andExpect(jsonPath("$.failLimit").value(DEFAULT_FAIL_LIMIT))
-            .andExpect(jsonPath("$.amountDiff").value(DEFAULT_AMOUNT_DIFF.doubleValue()));
+            .andExpect(jsonPath("$.failLimit").value(DEFAULT_FAIL_LIMIT));
     }
 
     @Test
@@ -224,8 +216,7 @@ class EffRequestResourceIT {
             .fusionMat1Amount(UPDATED_FUSION_MAT_1_AMOUNT)
             .fusionMat2Amount(UPDATED_FUSION_MAT_2_AMOUNT)
             .fusionMat3Amount(UPDATED_FUSION_MAT_3_AMOUNT)
-            .failLimit(UPDATED_FAIL_LIMIT)
-            .amountDiff(UPDATED_AMOUNT_DIFF);
+            .failLimit(UPDATED_FAIL_LIMIT);
 
         restEffRequestMockMvc
             .perform(
@@ -246,7 +237,6 @@ class EffRequestResourceIT {
         assertThat(testEffRequest.getFusionMat2Amount()).isEqualTo(UPDATED_FUSION_MAT_2_AMOUNT);
         assertThat(testEffRequest.getFusionMat3Amount()).isEqualTo(UPDATED_FUSION_MAT_3_AMOUNT);
         assertThat(testEffRequest.getFailLimit()).isEqualTo(UPDATED_FAIL_LIMIT);
-        assertThat(testEffRequest.getAmountDiff()).isEqualTo(UPDATED_AMOUNT_DIFF);
     }
 
     @Test
@@ -322,8 +312,7 @@ class EffRequestResourceIT {
             .additionPercentPerFail(UPDATED_ADDITION_PERCENT_PER_FAIL)
             .maxPercentAfterMats(UPDATED_MAX_PERCENT_AFTER_MATS)
             .fusionMat1Amount(UPDATED_FUSION_MAT_1_AMOUNT)
-            .fusionMat3Amount(UPDATED_FUSION_MAT_3_AMOUNT)
-            .amountDiff(UPDATED_AMOUNT_DIFF);
+            .fusionMat3Amount(UPDATED_FUSION_MAT_3_AMOUNT);
 
         restEffRequestMockMvc
             .perform(
@@ -344,7 +333,6 @@ class EffRequestResourceIT {
         assertThat(testEffRequest.getFusionMat2Amount()).isEqualTo(DEFAULT_FUSION_MAT_2_AMOUNT);
         assertThat(testEffRequest.getFusionMat3Amount()).isEqualTo(UPDATED_FUSION_MAT_3_AMOUNT);
         assertThat(testEffRequest.getFailLimit()).isEqualTo(DEFAULT_FAIL_LIMIT);
-        assertThat(testEffRequest.getAmountDiff()).isEqualTo(UPDATED_AMOUNT_DIFF);
     }
 
     @Test
@@ -366,8 +354,7 @@ class EffRequestResourceIT {
             .fusionMat1Amount(UPDATED_FUSION_MAT_1_AMOUNT)
             .fusionMat2Amount(UPDATED_FUSION_MAT_2_AMOUNT)
             .fusionMat3Amount(UPDATED_FUSION_MAT_3_AMOUNT)
-            .failLimit(UPDATED_FAIL_LIMIT)
-            .amountDiff(UPDATED_AMOUNT_DIFF);
+            .failLimit(UPDATED_FAIL_LIMIT);
 
         restEffRequestMockMvc
             .perform(
@@ -388,7 +375,6 @@ class EffRequestResourceIT {
         assertThat(testEffRequest.getFusionMat2Amount()).isEqualTo(UPDATED_FUSION_MAT_2_AMOUNT);
         assertThat(testEffRequest.getFusionMat3Amount()).isEqualTo(UPDATED_FUSION_MAT_3_AMOUNT);
         assertThat(testEffRequest.getFailLimit()).isEqualTo(UPDATED_FAIL_LIMIT);
-        assertThat(testEffRequest.getAmountDiff()).isEqualTo(UPDATED_AMOUNT_DIFF);
     }
 
     @Test

@@ -2,6 +2,7 @@ package lostark.service;
 
 import java.util.List;
 import java.util.Optional;
+import lostark.domain.EffRequest;
 import lostark.domain.Equipment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,4 +64,6 @@ public interface EquipmentService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Equipment effCalc(EffRequest effRequest);
 }

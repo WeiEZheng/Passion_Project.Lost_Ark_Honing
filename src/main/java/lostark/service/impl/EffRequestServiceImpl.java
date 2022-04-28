@@ -46,14 +46,12 @@ public class EffRequestServiceImpl implements EffRequestService {
             effRequest.getFusionMat2Amount(),
             effRequest.getFusionMat3Amount()
         );
-        effRequest.setAmountDiff(amountDiff);
         return this.save(effRequest);
     }
 
     @Override
     public EffRequest update(EffRequest effRequest) {
         log.debug("Request to save EffRequest : {}", effRequest);
-
         return this.save(effRequest);
     }
 

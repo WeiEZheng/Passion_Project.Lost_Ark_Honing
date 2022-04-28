@@ -7,22 +7,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IEffRequest } from 'app/shared/model/eff-request.model';
-import { getEntity, updateEntity, createEntity, reset } from 'app/entities/eff-request/eff-request.reducer';
+import { createEntity, reset } from 'app/entities/eff-request/eff-request.reducer';
+import { getEntity, updateEntity, effCalc } from './equipment.reducer';
 
 export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
   const [isNew] = useState(true);
+  const equipmentEntity = useAppSelector(state => state.equipment.entity);
   const effRequestEntity = useAppSelector(state => state.effRequest.entity);
   const loading = useAppSelector(state => state.effRequest.loading);
+  const [calc, setCalc] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(getEntity(props.match.params.id));
+  }, [calc]);
 
   const saveEntity = values => {
     const entity = {
       ...effRequestEntity,
       ...values,
+      eqid: props.match.params.id,
     };
-    dispatch(createEntity(entity));
+    dispatch(effCalc(entity));
+    setCalc(true);
   };
 
   const defaultValues = () =>
@@ -36,7 +43,6 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
           fusionMat2Amount: 0,
           fusionMat3Amount: 0,
           failLimit: 0,
-          id: props.match.params.id,
           ...effRequestEntity,
         };
 

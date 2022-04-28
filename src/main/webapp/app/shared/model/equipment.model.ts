@@ -10,6 +10,7 @@ export interface IEquipment {
   equipmentType?: EquipType;
   user?: IUser | null;
   characters?: ICharacters | null;
+  amountDiff?: number | null;
 }
 
 export const defaultValue: Readonly<IEquipment> = {};
