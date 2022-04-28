@@ -6,7 +6,7 @@ entity MarketPrice {
 }
 
 entity Characters{
-	Name String required 
+	Name String required
     AdvClass AdvClasses required
     Server Server required
 }
@@ -18,7 +18,7 @@ entity Equipment{
 }
 
 enum AdvClasses{
-Artillerist, Bard, Berserker, Deadeye, 
+Artillerist, Bard, Berserker, Deadeye,
 Deathblade, Destroyer, Glavier, Gunlancer,
 Gunslinger, Paladin,
 Scrapper, Shadowhunter,
@@ -34,26 +34,26 @@ enum TierEnum{
 }
 
 enum MaterialName{
-	DestructionStoneFragment ("Destruction Stone Fragment"), 
-    GuardianStoneFragment ("Guardian Stone Fragment"), 
-    HarmonyShard ("Harmony Shard"), 
-    HarmonyLeapstone ("Harmony Leapstone"), 
+	DestructionStoneFragment ("Destruction Stone Fragment"),
+    GuardianStoneFragment ("Guardian Stone Fragment"),
+    HarmonyShard ("Harmony Shard"),
+    HarmonyLeapstone ("Harmony Leapstone"),
     StarsBreaths ("Star's Breaths"),
-    DestructionStone ("Destruction Stone"), 
-    GuardianStone ("Guardian Stone"), 
-    LifeShard ("Life Shard"), 
-    LifeLeapstone ("Life Leapstone"), 
-    CaldarrFusionMaterial ("Caldarr Fusion Material"), 
+    DestructionStone ("Destruction Stone"),
+    GuardianStone ("Guardian Stone"),
+    LifeShard ("Life Shard"),
+    LifeLeapstone ("Life Leapstone"),
+    CaldarrFusionMaterial ("Caldarr Fusion Material"),
     MoonsBreaths ("Moon's Breaths"),
-    DestructionStoneCrystal ("Destruction Stone Crystal"), 
-    GuardianStoneCrystal("Guardian Stone Crystal"), 
-    HonorShard ("Honor Shard"), 
-    HonorLeapstone ("Honor Leapstone"), 
+    DestructionStoneCrystal ("Destruction Stone Crystal"),
+    GuardianStoneCrystal("Guardian Stone Crystal"),
+    HonorShard ("Honor Shard"),
+    HonorLeapstone ("Honor Leapstone"),
     SimpleOrehaFusionMaterial ("Simple Oreha Fusion Material"),
-    GreatHonorLeapstone ("Great Honor Leapstone"), 
-    BasicOrehaFusionMaterial ("Basic Oreha Fusion Material"), 
-    SolarGrace ("Solar Grace"), 
-    SolarBlessing ("Solar Blessing"), 
+    GreatHonorLeapstone ("Great Honor Leapstone"),
+    BasicOrehaFusionMaterial ("Basic Oreha Fusion Material"),
+    SolarGrace ("Solar Grace"),
+    SolarBlessing ("Solar Blessing"),
     SolarProtection ("Solar Protection")
 }
 
@@ -65,6 +65,17 @@ relationship ManyToOne{
 	Characters{user(login)} to User
     Equipment{user(login)} to User
     Equipment{Characters} to Characters{Equipment}
+}
+
+entity EffRequest{
+    basePercent Double,
+    additionPercentPerFail Double,
+    maxPercentAfterMats Double,
+	fusionMat1Amount Integer,
+    fusionMat2Amount Integer,
+    fusionMat3Amount Integer,
+    failLimit Integer,
+    amountDiff Double
 }
 
 service all with serviceImpl

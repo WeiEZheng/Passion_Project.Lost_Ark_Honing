@@ -52,6 +52,7 @@ public class CacheConfiguration {
             createCache(cm, lostark.domain.Characters.class.getName());
             createCache(cm, lostark.domain.Characters.class.getName() + ".equipment");
             createCache(cm, lostark.domain.Equipment.class.getName());
+            createCache(cm, lostark.domain.EffRequest.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
