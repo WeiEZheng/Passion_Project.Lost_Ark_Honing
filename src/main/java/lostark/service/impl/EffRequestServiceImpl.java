@@ -36,16 +36,18 @@ public class EffRequestServiceImpl implements EffRequestService {
     public EffRequest save(EffRequest effRequest) {
         log.debug("Request to save EffRequest : {}", effRequest);
         Equipment equipment = equipmentService.findOne(effRequest.getId()).get();
-        Double amountDiff = Calc.compareCost(
-            equipment,
-            effRequest.getBasePercent(),
-            effRequest.getAdditionPercentPerFail(),
-            effRequest.getFailLimit(),
-            effRequest.getMaxPercentAfterMats(),
-            effRequest.getFusionMat1Amount(),
-            effRequest.getFusionMat2Amount(),
-            effRequest.getFusionMat3Amount()
-        );
+        Double amountDiff = Calc
+            .getInstance()
+            .compareCost(
+                equipment,
+                effRequest.getBasePercent(),
+                effRequest.getAdditionPercentPerFail(),
+                effRequest.getFailLimit(),
+                effRequest.getMaxPercentAfterMats(),
+                effRequest.getFusionMat1Amount(),
+                effRequest.getFusionMat2Amount(),
+                effRequest.getFusionMat3Amount()
+            );
         return this.save(effRequest);
     }
 

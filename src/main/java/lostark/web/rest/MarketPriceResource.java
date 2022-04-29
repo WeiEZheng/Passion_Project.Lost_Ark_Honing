@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lostark.domain.MarketPrice;
+import lostark.domain.enumeration.MaterialName;
 import lostark.repository.MarketPriceRepository;
 import lostark.service.MarketPriceService;
 import lostark.web.rest.errors.BadRequestAlertException;
@@ -170,5 +171,11 @@ public class MarketPriceResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/market-prices/:name")
+    public MarketPrice getMarketPriceByName(@PathVariable MaterialName name) {
+        log.debug("REST request to get all MarketPrices");
+        return marketPriceService.findByItemName(name);
     }
 }

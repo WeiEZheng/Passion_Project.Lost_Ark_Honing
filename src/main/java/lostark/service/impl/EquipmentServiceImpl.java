@@ -96,16 +96,18 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     public Equipment effCalc(EffRequest effRequest) {
         Equipment equipment = findOne(effRequest.getEqid()).get();
-        Double amountDiff = Calc.compareCost(
-            equipment,
-            effRequest.getBasePercent(),
-            effRequest.getAdditionPercentPerFail(),
-            effRequest.getFailLimit(),
-            effRequest.getMaxPercentAfterMats(),
-            effRequest.getFusionMat1Amount(),
-            effRequest.getFusionMat2Amount(),
-            effRequest.getFusionMat3Amount()
-        );
+        Double amountDiff = Calc
+            .getInstance()
+            .compareCost(
+                equipment,
+                effRequest.getBasePercent(),
+                effRequest.getAdditionPercentPerFail(),
+                effRequest.getFailLimit(),
+                effRequest.getMaxPercentAfterMats(),
+                effRequest.getFusionMat1Amount(),
+                effRequest.getFusionMat2Amount(),
+                effRequest.getFusionMat3Amount()
+            );
         equipment.setAmountDiff(amountDiff);
         return this.save(equipment);
     }

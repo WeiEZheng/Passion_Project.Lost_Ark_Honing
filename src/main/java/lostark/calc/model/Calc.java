@@ -8,17 +8,28 @@ import lostark.domain.MarketPrice;
 import lostark.domain.enumeration.EquipType;
 import lostark.domain.enumeration.MaterialName;
 import lostark.domain.enumeration.TierEnum;
-import lostark.service.impl.MarketPriceServiceImpl;
+import lostark.repository.MarketPriceRepository;
+import lostark.service.MarketPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class Calc {
 
     private static HoningMat honingMat = HoningMat.getInstance();
+    private static Calc calc = new Calc();
+
+    MarketPrice Destruction;
+    MarketPrice StarsBreaths;
+    MarketPrice HarmonyShard;
+    MarketPrice HarmonyLeapstone;
 
     @Autowired
-    static MarketPriceServiceImpl marketPriceService;
+    MarketPriceService marketPriceService;
 
-    public static double compareCost(
+    public static Calc getInstance() {
+        return calc;
+    }
+
+    public double compareCost(
         Equipment equipment,
         Double basePercent,
         Double additionPercentPerFail,
@@ -28,6 +39,7 @@ public class Calc {
         Integer fusionMat2Amount,
         Integer fusionMat3Amount
     ) {
+        getMarketPrice();
         Integer cost = RegularCost(equipment);
         Double waitTimeDiff =
             simulate(basePercent, additionPercentPerFail, failLimit, 100000) -
@@ -36,44 +48,51 @@ public class Calc {
         return waitTimeDiff * cost - costOfFusionMat;
     }
 
-    public static Integer getExtraCost(Equipment equipment, Integer fusionMat1Amount, Integer fusionMat2Amount, Integer fusionMat3Amount) {
+    private void getMarketPrice() {
+        List<MarketPrice> market = marketPriceService.findAll();
+        for (MarketPrice s : market) {
+            if (s.getItemName() == MaterialName.DestructionStoneFragment) Destruction = s; else if (
+                s.getItemName() == MaterialName.StarsBreaths
+            ) StarsBreaths = s; else if (s.getItemName() == MaterialName.HarmonyLeapstone) HarmonyLeapstone = s; else if (
+                s.getItemName() == MaterialName.HarmonyShard
+            ) HarmonyShard = s;
+        }
+    }
+
+    public Integer getExtraCost(Equipment equipment, Integer fusionMat1Amount, Integer fusionMat2Amount, Integer fusionMat3Amount) {
         if (equipment.getTier() == TierEnum.Tier1) return getCost(
             fusionMat1Amount,
-            marketPriceService.findOneByItemName(MaterialName.StarsBreaths).get()
+            marketPriceService.findByItemName(MaterialName.StarsBreaths)
         ); else if (equipment.getTier() == TierEnum.Tier2) return getCost(
             fusionMat1Amount,
-            marketPriceService.findOneByItemName(MaterialName.MoonsBreaths).get()
+            marketPriceService.findByItemName(MaterialName.MoonsBreaths)
         ); else return (
-            getCost(fusionMat1Amount, marketPriceService.findOneByItemName(MaterialName.SolarGrace).get()) +
-            getCost(fusionMat2Amount, marketPriceService.findOneByItemName(MaterialName.SolarBlessing).get()) +
-            getCost(fusionMat3Amount, marketPriceService.findOneByItemName(MaterialName.SolarProtection).get())
+            getCost(fusionMat1Amount, marketPriceService.findByItemName(MaterialName.SolarGrace)) +
+            getCost(fusionMat2Amount, marketPriceService.findByItemName(MaterialName.SolarBlessing)) +
+            getCost(fusionMat3Amount, marketPriceService.findByItemName(MaterialName.SolarProtection))
         );
     }
 
-    public static Integer RegularCost(Equipment equipment) {
+    public Integer RegularCost(Equipment equipment) {
         List<Integer> mat = honingMat.get(equipment.getEquipmentType(), equipment.getTier(), equipment.getHoningLevel(), false);
         Integer cost = 0;
-        cost +=
-            getCost(
-                mat.get(0),
-                marketPriceService.findOneByItemName(getStoneName(equipment.getTier(), equipment.getEquipmentType())).get()
-            );
-        cost += getCost(mat.get(1), marketPriceService.findOneByItemName(getShardName(equipment.getTier())).get());
-        cost += getCost(mat.get(2), marketPriceService.findOneByItemName(getLeapName(equipment.getTier())).get());
+        cost += getCost(mat.get(0), Destruction);
+        cost += getCost(mat.get(1), HarmonyShard);
+        cost += getCost(mat.get(2), HarmonyLeapstone);
         if (mat.get(4) != 0) {
-            cost += getCost(mat.get(4), marketPriceService.findOneByItemName(getFusionName(equipment.getTier())).get());
+            cost += getCost(mat.get(4), marketPriceService.findByItemName(getFusionName(equipment.getTier())));
         }
         cost += mat.get(4);
         return cost;
     }
 
-    public static MaterialName getFusionName(TierEnum tier) {
+    public MaterialName getFusionName(TierEnum tier) {
         if (tier == TierEnum.Tier2) return MaterialName.CaldarrFusionMaterial; else if (
             tier == TierEnum.Tier3Low
         ) return MaterialName.SimpleOrehaFusionMaterial; else return MaterialName.BasicOrehaFusionMaterial;
     }
 
-    public static MaterialName getLeapName(TierEnum tier) {
+    public MaterialName getLeapName(TierEnum tier) {
         if (tier == TierEnum.Tier1) return MaterialName.HarmonyLeapstone; else if (
             tier == TierEnum.Tier2
         ) return MaterialName.LifeLeapstone; else if (
@@ -81,13 +100,13 @@ public class Calc {
         ) return MaterialName.HonorLeapstone; else return MaterialName.GreatHonorLeapstone;
     }
 
-    public static MaterialName getShardName(TierEnum tier) {
+    public MaterialName getShardName(TierEnum tier) {
         if (tier == TierEnum.Tier1) return MaterialName.HarmonyShard; else if (
             tier == TierEnum.Tier2
         ) return MaterialName.LifeShard; else return MaterialName.HonorShard;
     }
 
-    public static MaterialName getStoneName(TierEnum tier, EquipType equipmentType) {
+    public MaterialName getStoneName(TierEnum tier, EquipType equipmentType) {
         if (equipmentType == EquipType.Armor) {
             return getGuardianName(tier);
         } else {
@@ -95,23 +114,23 @@ public class Calc {
         }
     }
 
-    public static MaterialName getDestructionName(TierEnum tier) {
+    public MaterialName getDestructionName(TierEnum tier) {
         if (tier == TierEnum.Tier1) return MaterialName.DestructionStoneFragment; else if (
             tier == TierEnum.Tier2
         ) return MaterialName.DestructionStone; else return MaterialName.DestructionStoneCrystal;
     }
 
-    public static MaterialName getGuardianName(TierEnum tier) {
+    public MaterialName getGuardianName(TierEnum tier) {
         if (tier == TierEnum.Tier1) return MaterialName.GuardianStoneFragment; else if (
             tier == TierEnum.Tier2
         ) return MaterialName.GuardianStone; else return MaterialName.GuardianStoneCrystal;
     }
 
-    public static Integer getCost(Integer count, MarketPrice marketPrice) {
+    public Integer getCost(Integer count, MarketPrice marketPrice) {
         return ((int) Math.ceil(1.0 * count / marketPrice.getNumberPerStack())) * marketPrice.getItemPricePerStack();
     }
 
-    public static double simulate(Double basePercent, Double additionPercentPerFail, Integer failLimit, Integer SimCount) {
+    public double simulate(Double basePercent, Double additionPercentPerFail, Integer failLimit, Integer SimCount) {
         Random random = new Random();
         Integer count = 0;
         List<Integer> waitTime = new ArrayList<>();
