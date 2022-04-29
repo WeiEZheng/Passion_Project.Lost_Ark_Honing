@@ -5,6 +5,7 @@ import java.time.Instant;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import lostark.domain.enumeration.MaterialName;
+import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,6 +25,7 @@ public class MarketPrice implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Unique
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "item_name", nullable = false, unique = true)

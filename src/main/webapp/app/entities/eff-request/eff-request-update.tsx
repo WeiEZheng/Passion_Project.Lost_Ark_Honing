@@ -1,48 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
-
-import { Button, Row, Col } from 'reactstrap';
+import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { IEffRequest } from 'app/shared/model/eff-request.model';
-import { createEntity, reset } from 'app/entities/eff-request/eff-request.reducer';
-import { getEntity, updateEntity, effCalc } from './equipment.reducer';
 
-export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) => {
+import { IEffRequest } from 'app/shared/model/eff-request.model';
+import { getEntity, updateEntity, createEntity, reset } from './eff-request.reducer';
+
+export const EffRequestUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
-  const [isNew] = useState(true);
-  const equipmentEntity = useAppSelector(state => state.equipment.entity);
+
+  const [isNew] = useState(!props.match.params || !props.match.params.id);
+
   const effRequestEntity = useAppSelector(state => state.effRequest.entity);
   const loading = useAppSelector(state => state.effRequest.loading);
-  const [calc, setCalc] = useState(false);
+  const updating = useAppSelector(state => state.effRequest.updating);
+  const updateSuccess = useAppSelector(state => state.effRequest.updateSuccess);
+  const handleClose = () => {
+    props.history.push('/eff-request');
+  };
 
   useEffect(() => {
-    dispatch(getEntity(props.match.params.id));
-  }, [calc]);
+    if (isNew) {
+      dispatch(reset());
+    } else {
+      dispatch(getEntity(props.match.params.id));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      handleClose();
+    }
+  }, [updateSuccess]);
 
   const saveEntity = values => {
     const entity = {
       ...effRequestEntity,
       ...values,
-      eqid: props.match.params.id,
     };
-    dispatch(effCalc(entity));
-    setCalc(true);
+    dispatch(updateEntity(entity));
   };
 
   const defaultValues = () =>
     isNew
       ? {}
       : {
-          basePercent: 0,
-          additionPercentPerFail: 0,
-          maxPercentAfterMats: 0,
-          fusionMat1Amount: 0,
-          fusionMat2Amount: 0,
-          fusionMat3Amount: 0,
-          failLimit: 0,
           ...effRequestEntity,
         };
 
@@ -50,7 +57,14 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          {
+          <h2 id="lostarkApp.effRequest.home.createOrEditLabel" data-cy="EffRequestCreateUpdateHeading"></h2>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col md="8">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               <ValidatedField
                 label="Base Percent"
@@ -150,11 +164,11 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 &nbsp; Start
               </Button>
             </ValidatedForm>
-          }
+          )}
         </Col>
       </Row>
     </div>
   );
 };
 
-export default EquipmentHoneCalc;
+export default EffRequestUpdate;

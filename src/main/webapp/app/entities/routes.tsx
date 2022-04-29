@@ -5,6 +5,7 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import MarketPrice from './market-price';
 import Characters from './characters';
 import Equipment from './equipment';
+import EffRequest from './eff-request';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default ({ match }) => {
@@ -15,6 +16,7 @@ export default ({ match }) => {
         <ErrorBoundaryRoute path={`${match.url}market-price`} component={MarketPrice} />
         <ErrorBoundaryRoute path={`${match.url}characters`} component={Characters} />
         <ErrorBoundaryRoute path={`${match.url}equipment`} component={Equipment} />
+        <ErrorBoundaryRoute path={`${match.url}eff-request`} component={EffRequest} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </Switch>
     </div>

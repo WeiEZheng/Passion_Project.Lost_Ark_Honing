@@ -7,9 +7,11 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import lostark.domain.EffRequest;
 import lostark.domain.Equipment;
 import lostark.repository.EquipmentRepository;
 import lostark.service.EquipmentService;
+import lostark.service.impl.EquipmentServiceImpl;
 import lostark.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -171,5 +173,29 @@ public class EquipmentResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping(value = "/equipment/{id}/calc", consumes = { "application/json", "application/merge-patch+json" })
+    public ResponseEntity<Equipment> effCalc(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody EffRequest effRequest
+    ) throws URISyntaxException {
+        log.debug("REST request to partial update Equipment partially : {}, {}", id);
+        if (effRequest.getEqid() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, effRequest.getEqid())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!equipmentRepository.existsById(effRequest.getEqid())) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Equipment result = equipmentService.effCalc(effRequest);
+
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, effRequest.getEqid().toString()))
+            .body(result);
     }
 }

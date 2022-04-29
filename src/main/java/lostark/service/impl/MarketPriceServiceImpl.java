@@ -84,8 +84,10 @@ public class MarketPriceServiceImpl implements MarketPriceService {
         marketPriceRepository.deleteById(id);
     }
 
-    public Optional<MarketPrice> findOneByItemName(MaterialName materialName) {
+    @Override
+    @Transactional
+    public MarketPrice findByItemName(MaterialName materialName) {
         log.debug("Request to get MarketPrice : {}", materialName);
-        return marketPriceRepository.findOneByItemName(materialName);
+        return marketPriceRepository.findByItemName(materialName);
     }
 }

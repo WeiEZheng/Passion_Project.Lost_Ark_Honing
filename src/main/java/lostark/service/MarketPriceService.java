@@ -3,6 +3,7 @@ package lostark.service;
 import java.util.List;
 import java.util.Optional;
 import lostark.domain.MarketPrice;
+import lostark.domain.enumeration.MaterialName;
 
 /**
  * Service Interface for managing {@link MarketPrice}.
@@ -53,4 +54,6 @@ public interface MarketPriceService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    MarketPrice findByItemName(MaterialName materialName);
 }

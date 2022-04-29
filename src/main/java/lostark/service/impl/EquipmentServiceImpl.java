@@ -2,6 +2,8 @@ package lostark.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import lostark.calc.model.Calc;
+import lostark.domain.EffRequest;
 import lostark.domain.Equipment;
 import lostark.repository.EquipmentRepository;
 import lostark.repository.UserRepository;
@@ -90,5 +92,23 @@ public class EquipmentServiceImpl implements EquipmentService {
     public void delete(Long id) {
         log.debug("Request to delete Equipment : {}", id);
         equipmentRepository.deleteById(id);
+    }
+
+    public Equipment effCalc(EffRequest effRequest) {
+        Equipment equipment = findOne(effRequest.getEqid()).get();
+        Double amountDiff = Calc
+            .getInstance()
+            .compareCost(
+                equipment,
+                effRequest.getBasePercent(),
+                effRequest.getAdditionPercentPerFail(),
+                effRequest.getFailLimit(),
+                effRequest.getMaxPercentAfterMats(),
+                effRequest.getFusionMat1Amount(),
+                effRequest.getFusionMat2Amount(),
+                effRequest.getFusionMat3Amount()
+            );
+        equipment.setAmountDiff(amountDiff);
+        return this.save(equipment);
     }
 }

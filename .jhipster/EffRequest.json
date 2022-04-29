@@ -1,0 +1,48 @@
+{
+  "applications": "*",
+  "changelogDate": "20220428025053",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "eff_request",
+  "fields": [
+    {
+      "fieldName": "basePercent",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "additionPercentPerFail",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "maxPercentAfterMats",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "fusionMat1Amount",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "fusionMat2Amount",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "fusionMat3Amount",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "failLimit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "amountDiff",
+      "fieldType": "Double"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EffRequest",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

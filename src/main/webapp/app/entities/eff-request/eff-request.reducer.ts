@@ -3,10 +3,9 @@ import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/t
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
-import { IEquipment, defaultValue } from 'app/shared/model/equipment.model';
-import { IEffRequest } from 'app/shared/model/eff-request.model';
+import { IEffRequest, defaultValue } from 'app/shared/model/eff-request.model';
 
-const initialState: EntityState<IEquipment> = {
+const initialState: EntityState<IEffRequest> = {
   loading: false,
   errorMessage: null,
   entities: [],
@@ -15,28 +14,28 @@ const initialState: EntityState<IEquipment> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/equipment';
+const apiUrl = 'api/eff-requests';
 
 // Actions
 
-export const getEntities = createAsyncThunk('equipment/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+export const getEntities = createAsyncThunk('effRequest/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}?cacheBuster=${new Date().getTime()}`;
-  return axios.get<IEquipment[]>(requestUrl);
+  return axios.get<IEffRequest[]>(requestUrl);
 });
 
 export const getEntity = createAsyncThunk(
-  'equipment/fetch_entity',
+  'effRequest/fetch_entity',
   async (id: string | number) => {
     const requestUrl = `${apiUrl}/${id}`;
-    return axios.get<IEquipment>(requestUrl);
+    return axios.get<IEffRequest>(requestUrl);
   },
   { serializeError: serializeAxiosError }
 );
 
 export const createEntity = createAsyncThunk(
-  'equipment/create_entity',
-  async (entity: IEquipment, thunkAPI) => {
-    const result = await axios.post<IEquipment>(apiUrl, cleanEntity(entity));
+  'effRequest/create_entity',
+  async (entity: IEffRequest, thunkAPI) => {
+    const result = await axios.post<IEffRequest>(apiUrl, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -44,9 +43,9 @@ export const createEntity = createAsyncThunk(
 );
 
 export const updateEntity = createAsyncThunk(
-  'equipment/update_entity',
-  async (entity: IEquipment, thunkAPI) => {
-    const result = await axios.put<IEquipment>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'effRequest/update_entity',
+  async (entity: IEffRequest, thunkAPI) => {
+    const result = await axios.put<IEffRequest>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -54,9 +53,9 @@ export const updateEntity = createAsyncThunk(
 );
 
 export const partialUpdateEntity = createAsyncThunk(
-  'equipment/partial_update_entity',
-  async (entity: IEquipment, thunkAPI) => {
-    const result = await axios.patch<IEquipment>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'effRequest/partial_update_entity',
+  async (entity: IEffRequest, thunkAPI) => {
+    const result = await axios.patch<IEffRequest>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -64,10 +63,10 @@ export const partialUpdateEntity = createAsyncThunk(
 );
 
 export const deleteEntity = createAsyncThunk(
-  'equipment/delete_entity',
+  'effRequest/delete_entity',
   async (id: string | number, thunkAPI) => {
     const requestUrl = `${apiUrl}/${id}`;
-    const result = await axios.delete<IEquipment>(requestUrl);
+    const result = await axios.delete<IEffRequest>(requestUrl);
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -76,8 +75,8 @@ export const deleteEntity = createAsyncThunk(
 
 // slice
 
-export const EquipmentSlice = createEntitySlice({
-  name: 'equipment',
+export const EffRequestSlice = createEntitySlice({
+  name: 'effRequest',
   initialState,
   extraReducers(builder) {
     builder
@@ -118,17 +117,7 @@ export const EquipmentSlice = createEntitySlice({
   },
 });
 
-export const effCalc = createAsyncThunk(
-  'equipment/requestEff',
-  async (entity: IEffRequest) => {
-    const id = entity.eqid;
-    const result = await axios.post<IEquipment>(`${apiUrl}/${id}/calc`, cleanEntity(entity));
-    return result;
-  },
-  { serializeError: serializeAxiosError }
-);
-
-export const { reset } = EquipmentSlice.actions;
+export const { reset } = EffRequestSlice.actions;
 
 // Reducer
-export default EquipmentSlice.reducer;
+export default EffRequestSlice.reducer;

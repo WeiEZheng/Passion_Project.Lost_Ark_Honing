@@ -18,6 +18,7 @@
     <include file="config/liquibase/changelog/20220422204239_added_entity_MarketPrice.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220422204240_added_entity_Characters.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220422204241_added_entity_Equipment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220428025053_added_entity_EffRequest.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20220422204240_added_entity_constraints_Characters.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220422204241_added_entity_constraints_Equipment.xml" relativeToChangelogFile="false"/>
