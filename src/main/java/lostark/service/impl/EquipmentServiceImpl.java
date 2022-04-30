@@ -2,12 +2,12 @@ package lostark.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import lostark.calc.model.Calc;
 import lostark.domain.EffRequest;
 import lostark.domain.Equipment;
 import lostark.repository.EquipmentRepository;
 import lostark.repository.UserRepository;
 import lostark.security.SecurityUtils;
+import lostark.service.Calc;
 import lostark.service.EquipmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
