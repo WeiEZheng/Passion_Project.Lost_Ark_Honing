@@ -1,16 +1,16 @@
-package lostark.calc.model;
+package lostark.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import lostark.calc.model.HoningMat;
 import lostark.domain.Equipment;
 import lostark.domain.MarketPrice;
 import lostark.domain.enumeration.EquipType;
 import lostark.domain.enumeration.MaterialName;
 import lostark.domain.enumeration.TierEnum;
-import lostark.repository.MarketPriceRepository;
-import lostark.service.MarketPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 public class Calc {
 

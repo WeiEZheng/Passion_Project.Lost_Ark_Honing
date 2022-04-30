@@ -3,6 +3,7 @@ package lostark.calc.model;
 import lostark.domain.enumeration.EquipType;
 import lostark.domain.enumeration.MaterialName;
 import lostark.domain.enumeration.TierEnum;
+import lostark.service.Calc;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
