@@ -8,6 +8,7 @@ import lostark.repository.EffRequestRepository;
 import lostark.service.Calc;
 import lostark.service.EffRequestService;
 import lostark.service.EquipmentService;
+import lostark.service.MarketPriceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class EffRequestServiceImpl implements EffRequestService {
     @Autowired
     EquipmentService equipmentService;
 
+    @Autowired
+    MarketPriceService marketPriceService;
+
     public EffRequestServiceImpl(EffRequestRepository effRequestRepository) {
         this.effRequestRepository = effRequestRepository;
     }
@@ -46,7 +50,8 @@ public class EffRequestServiceImpl implements EffRequestService {
                 effRequest.getMaxPercentAfterMats(),
                 effRequest.getFusionMat1Amount(),
                 effRequest.getFusionMat2Amount(),
-                effRequest.getFusionMat3Amount()
+                effRequest.getFusionMat3Amount(),
+                marketPriceService
             );
         return this.save(effRequest);
     }

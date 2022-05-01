@@ -22,7 +22,6 @@ public class Calc {
     MarketPrice HarmonyShard;
     MarketPrice HarmonyLeapstone;
 
-    @Autowired
     MarketPriceService marketPriceService;
 
     public static Calc getInstance() {
@@ -37,13 +36,15 @@ public class Calc {
         Double maxPercentAfterMats,
         Integer fusionMat1Amount,
         Integer fusionMat2Amount,
-        Integer fusionMat3Amount
+        Integer fusionMat3Amount,
+        MarketPriceService marketPriceService
     ) {
+        this.marketPriceService = marketPriceService;
         getMarketPrice();
         Integer cost = RegularCost(equipment);
         Double waitTimeDiff =
-            simulate(basePercent, additionPercentPerFail, failLimit, 100000) -
-            simulate(maxPercentAfterMats, additionPercentPerFail, failLimit, 100000);
+            simulate(basePercent, additionPercentPerFail, failLimit, 10000) -
+            simulate(maxPercentAfterMats, additionPercentPerFail, failLimit, 10000);
         Integer costOfFusionMat = getExtraCost(equipment, fusionMat1Amount, fusionMat2Amount, fusionMat3Amount);
         return waitTimeDiff * cost - costOfFusionMat;
     }
@@ -132,20 +133,20 @@ public class Calc {
 
     public double simulate(Double basePercent, Double additionPercentPerFail, Integer failLimit, Integer SimCount) {
         Random random = new Random();
-        Integer count = 0;
-        List<Integer> waitTime = new ArrayList<>();
-        while (true) {
+        Integer count = 0, index = 0;
+        Integer[] waitTime = new Integer[SimCount];
+        while (index < SimCount) {
             if (random.nextDouble() <= (basePercent + (count * additionPercentPerFail)) || count > failLimit) {
-                waitTime.add(count + 1);
+                waitTime[index] = (count + 1);
                 count = 0;
+                index++;
                 continue;
             }
             count++;
-            if (waitTime.size() >= SimCount) break;
         }
         double avg = 0.0;
-        for (int i = 0; i < waitTime.size(); i++) {
-            avg += Double.valueOf((waitTime.get(i) - avg) / (i + 1));
+        for (int i = 0; i < waitTime.length; i++) {
+            avg += Double.valueOf((waitTime[i] - avg) / (i + 1));
         }
         return avg;
     }
