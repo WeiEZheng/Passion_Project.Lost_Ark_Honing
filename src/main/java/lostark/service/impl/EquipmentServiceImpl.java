@@ -9,6 +9,7 @@ import lostark.repository.UserRepository;
 import lostark.security.SecurityUtils;
 import lostark.service.Calc;
 import lostark.service.EquipmentService;
+import lostark.service.MarketPriceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    MarketPriceService marketPriceService;
 
     public EquipmentServiceImpl(EquipmentRepository equipmentRepository) {
         this.equipmentRepository = equipmentRepository;
@@ -96,18 +100,17 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     public Equipment effCalc(EffRequest effRequest) {
         Equipment equipment = findOne(effRequest.getEqid()).get();
-        Double amountDiff = Calc
-            .getInstance()
-            .compareCost(
-                equipment,
-                effRequest.getBasePercent(),
-                effRequest.getAdditionPercentPerFail(),
-                effRequest.getFailLimit(),
-                effRequest.getMaxPercentAfterMats(),
-                effRequest.getFusionMat1Amount(),
-                effRequest.getFusionMat2Amount(),
-                effRequest.getFusionMat3Amount()
-            );
+        Double amountDiff = Calc.compareCost(
+            equipment,
+            effRequest.getBasePercent(),
+            effRequest.getAdditionPercentPerFail(),
+            effRequest.getFailLimit(),
+            effRequest.getMaxPercentAfterMats(),
+            effRequest.getFusionMat1Amount(),
+            effRequest.getFusionMat2Amount(),
+            effRequest.getFusionMat3Amount(),
+            marketPriceService
+        );
         equipment.setAmountDiff(amountDiff);
         return this.save(equipment);
     }

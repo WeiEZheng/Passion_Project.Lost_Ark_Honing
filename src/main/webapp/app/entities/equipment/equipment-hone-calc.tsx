@@ -50,7 +50,9 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          {
+          {calc === true ? (
+            'Gold Efficiency = ' + equipmentEntity.amountDiff
+          ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               <ValidatedField
                 label="Base Percent"
@@ -150,7 +152,7 @@ export const EquipmentHoneCalc = (props: RouteComponentProps<{ id: string }>) =>
                 &nbsp; Start
               </Button>
             </ValidatedForm>
-          }
+          )}
         </Col>
       </Row>
     </div>

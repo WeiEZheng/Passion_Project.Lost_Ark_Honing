@@ -159,14 +159,25 @@ public class Equipment implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "Equipment{" +
-            "id=" + getId() +
-            ", tier='" + getTier() + "'" +
-            ", honingLevel=" + getHoningLevel() +
-            ", equipmentType='" + getEquipmentType() + "'" +
-            "}";
+        return (
+            "Equipment{" +
+            "id=" +
+            id +
+            ", tier=" +
+            tier +
+            ", honingLevel=" +
+            honingLevel +
+            ", equipmentType=" +
+            equipmentType +
+            ", user=" +
+            user +
+            ", characters=" +
+            characters +
+            ", amountDiff=" +
+            amountDiff +
+            '}'
+        );
     }
 }
