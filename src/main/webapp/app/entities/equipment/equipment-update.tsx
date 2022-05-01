@@ -40,7 +40,6 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
     } else {
       dispatch(getEntity(props.match.params.id));
     }
-
     dispatch(getUsers({}));
     dispatch(getCharacters({}));
   }, []);
@@ -56,6 +55,7 @@ export const EquipmentUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ...equipmentEntity,
       ...values,
       characters: characters.find(it => it.id.toString() === values.characters.toString()),
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {

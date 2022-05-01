@@ -51,6 +51,7 @@ export const CharactersUpdate = (props: RouteComponentProps<{ id: string }>) => 
     const entity = {
       ...charactersEntity,
       ...values,
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
