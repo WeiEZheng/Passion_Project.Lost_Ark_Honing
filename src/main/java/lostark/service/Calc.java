@@ -9,11 +9,12 @@ import lostark.domain.MarketPrice;
 import lostark.domain.enumeration.EquipType;
 import lostark.domain.enumeration.MaterialName;
 import lostark.domain.enumeration.TierEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Calc {
 
+    private static final Logger log = LoggerFactory.getLogger(Calc.class);
     private static HoningMat honingMat = HoningMat.getInstance();
     private static MarketPriceService marketPriceService;
 
@@ -31,8 +32,8 @@ public class Calc {
         Calc.marketPriceService = marketPriceService;
         Integer cost = RegularCost(equipment);
         Double waitTimeDiff =
-            simulate(basePercent, additionPercentPerFail, failLimit, 100000) -
-            simulate(maxPercentAfterMats, additionPercentPerFail, failLimit, 100000);
+            simulate(basePercent / 100, additionPercentPerFail / 100, failLimit, 100000) -
+            simulate(maxPercentAfterMats / 100, additionPercentPerFail / 100, failLimit, 100000);
         Integer costOfFusionMat = getExtraCost(equipment, fusionMat1Amount, fusionMat2Amount, fusionMat3Amount);
         return waitTimeDiff * cost - costOfFusionMat;
     }

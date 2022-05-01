@@ -111,7 +111,6 @@ public class EquipmentServiceImpl implements EquipmentService {
             effRequest.getFusionMat3Amount(),
             marketPriceService
         );
-
         equipment.setAmountDiff(amountDiff);
         return this.save(equipment);
     }
