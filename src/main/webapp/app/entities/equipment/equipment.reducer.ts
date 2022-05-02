@@ -120,9 +120,10 @@ export const EquipmentSlice = createEntitySlice({
 
 export const effCalc = createAsyncThunk(
   'equipment/requestEff',
-  async (entity: IEffRequest) => {
+  async (entity: IEffRequest, thunkAPI) => {
     const id = entity.eqid;
     const result = await axios.post<IEquipment>(`${apiUrl}/${id}/calc`, cleanEntity(entity));
+    thunkAPI.dispatch(getEntity(id));
     return result;
   },
   { serializeError: serializeAxiosError }
