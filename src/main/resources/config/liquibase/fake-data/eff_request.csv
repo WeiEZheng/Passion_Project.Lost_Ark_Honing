@@ -1,4 +1,4 @@
-id;base_percent;addition_percent_per_fail;max_percent_after_mats;fusion_mat_1_amount;fusion_mat_2_amount;fusion_mat_3_amount;fail_limit;amount_diff
+id;base_percent;addition_percent_per_fail;max_percent_after_mats;fusion_mat_1_amount;fusion_mat_2_amount;fusion_mat_3_amount;fail_limit;eqid
 1;38089;19672;4095;11631;98860;27961;18176;15151
 2;44285;54717;72266;41222;42124;47479;88071;83491
 3;31619;5183;41977;73189;30657;57670;84656;79042
