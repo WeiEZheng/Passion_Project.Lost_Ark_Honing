@@ -58,8 +58,8 @@ public class Calc {
         cost += getCost(mat.get(0), marketPriceService.findByItemName(getStoneName(equipment.getTier(), equipment.getEquipmentType())));
         cost += getCost(mat.get(1), marketPriceService.findByItemName(getShardName(equipment.getTier())));
         cost += getCost(mat.get(2), marketPriceService.findByItemName(getLeapName(equipment.getTier())));
-        if (mat.get(4) != 0) {
-            cost += getCost(mat.get(4), marketPriceService.findByItemName(getFusionName(equipment.getTier())));
+        if (mat.get(3) != 0) {
+            cost += getCost(mat.get(3), marketPriceService.findByItemName(getFusionName(equipment.getTier())));
         }
         cost += mat.get(4);
         return cost;
